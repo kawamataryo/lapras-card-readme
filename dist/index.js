@@ -142,7 +142,8 @@ function run() {
                 committer: {
                     name: 'github-actions[bot]',
                     email: '41898282+github-actions[bot]@users.noreply.github.com'
-                }
+                },
+                sha: github.context.sha
             });
             core.setOutput('lang', lang);
             core.setOutput('time', new Date().toTimeString());
