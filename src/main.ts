@@ -28,7 +28,7 @@ async function run(): Promise<void> {
     const re = new RegExp(`${MARK.START}(.|\n)*${MARK.END}`, 'g')
     readme.replace(re, cardText)
 
-    await fs.writeFile('../README.md', readme)
+    await fs.writeFile('README.md', readme)
 
     const myToken = core.getInput('myToken')
     const octokit = github.getOctokit(myToken)
