@@ -134,7 +134,7 @@ function run() {
             const readme = yield fs.readFile('../README.md', 'utf8');
             const re = new RegExp(`${constant_1.MARK.START}(.|\n)*${constant_1.MARK.END}`, 'g');
             readme.replace(re, cardText);
-            yield fs.writeFile('../README.md', readme);
+            yield fs.writeFile('README.md', readme);
             const myToken = core.getInput('myToken');
             const octokit = github_1.default.getOctokit(myToken);
             octokit.rest.repos.createOrUpdateFileContents({
