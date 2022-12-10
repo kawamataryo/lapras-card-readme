@@ -47,7 +47,9 @@ async function run(): Promise<void> {
     core.setOutput('lang', lang)
     core.setOutput('time', new Date().toTimeString())
   } catch (error) {
+    console.log('🚀 ~ file: main.ts:50 ~ run ~ error', error)
     if (error instanceof Error) core.setFailed(error.message)
+    if (error instanceof Error) core.setFailed(error)
   }
 }
 
