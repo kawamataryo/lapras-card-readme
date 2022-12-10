@@ -30,8 +30,7 @@ async function run(): Promise<void> {
 
     await fs.writeFile('README.md', readme)
 
-    const myToken = core.getInput('myToken')
-    const octokit = github.getOctokit(myToken)
+    const octokit = github.getOctokit(core.getInput('GITHUB_TOKEN'))
     octokit.rest.repos.createOrUpdateFileContents({
       repo: github.context.repo.repo,
       owner: github.context.repo.owner,
