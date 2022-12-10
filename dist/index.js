@@ -25,7 +25,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.createCardText = void 0;
 const createCardText = ({ shareId, score, theme, lang }) => {
     const imageUrl = `https://lapras-card-generator.vercel.app/api/svg?e=${score.eScore}&b=${score.bScore}&i=${score.iScore}&b1=${encodeURIComponent(theme.background.first)}&b2=${encodeURIComponent(theme.background.second)}&i1=${encodeURIComponent(theme.icon.first)}&i2=${encodeURIComponent(theme.icon.second)}&l=${lang}`;
-    return `<a href="https://lapras.com/public/${shareId}" target="_blank" rel="noopener noreferrer"><img src="${imageUrl}" width="450" /></a>`;
+    return `<a href="https://lapras.com/public/${shareId}" target="_blank" rel="noopener noreferrer"><img src="${imageUrl}" width="450" ></a>`;
 };
 exports.createCardText = createCardText;
 
