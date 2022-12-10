@@ -25,7 +25,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.createCardText = void 0;
 const createCardText = ({ shareId, score, theme, lang }) => {
     const imageUrl = `https://lapras-card-generator.vercel.app/api/svg?e=${score.eScore}&b=${score.bScore}&i=${score.iScore}&b1=${encodeURIComponent(theme.background.first)}&b2=${encodeURIComponent(theme.background.second)}&i1=${encodeURIComponent(theme.icon.first)}&i2=${encodeURIComponent(theme.icon.second)}&l=${lang}`;
-    return `<a href="https://lapras.com/public/${shareId}" target="_blank" rel="noopener noreferrer"><img src="${imageUrl}" width="300" ></a>`;
+    return `<a href="https://lapras.com/public/${shareId}" target="_blank" rel="noopener noreferrer"><img src="${imageUrl}" width="400" ></a>`;
 };
 exports.createCardText = createCardText;
 
@@ -129,8 +129,8 @@ function run() {
             const score = yield (0, fetchScore_1.fetchScore)(shareId);
             const cardText = (0, createCardText_1.createCardText)({ shareId, score, theme, lang });
             let readme = yield fs.readFile('README.md', 'utf8');
-            const re = new RegExp(`${constant_1.MARK.START}(.|\n)*${constant_1.MARK.END}`, 'g');
-            readme = readme.replace(re, cardText);
+            const re = new RegExp(`(${constant_1.MARK.START})[\\s\\S]*(${constant_1.MARK.END})`);
+            readme = readme.replace(re, `$1\n${cardText}\n$2`);
             const octokit = github.getOctokit(core.getInput('GH_TOKEN'));
             const res = yield octokit.rest.repos.getContent({
                 repo: github.context.repo.repo,
