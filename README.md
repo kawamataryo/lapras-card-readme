@@ -2,7 +2,8 @@
   <a href="https://github.com/actions/typescript-action/actions"><img alt="typescript-action status" src="https://github.com/actions/typescript-action/workflows/build-test/badge.svg"></a>
 </p>
 
-<a href="https://lapras.com/public/sss" target="_blank" rel="noopener noreferrer"><img src="https://lapras-card-generator.vercel.app/api/svg?e=3.1&b=3.2&i=4.3&b1=%23020E27&b2=%230E5593&i1=%23030E21&i2=%231688BF&l=ja" width="450" ></a>
+<!--START_SECTION:lapras-card-->
+<!--END_SECTION:lapras-card-->
 
 # Create a JavaScript Action using TypeScript
 
