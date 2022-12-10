@@ -36,7 +36,7 @@ async function run(): Promise<void> {
       owner: github.context.repo.owner,
       path: 'README.md',
       message: 'update README.md',
-      content: readme,
+      content: Buffer.from(readme).toString('base64'),
       committer: {
         name: 'github-actions[bot]',
         email: '41898282+github-actions[bot]@users.noreply.github.com'
