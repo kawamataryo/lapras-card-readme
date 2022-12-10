@@ -1,6 +1,6 @@
-name: 'Your name here'
-description: 'Provide a description here'
-author: 'Your name or organization here'
+name: 'LAPRAS Card Actions'
+description: 'Add LAPRAS Card to your GitHub profile.'
+author: 'kawamataryo'
 inputs:
   milliseconds: # change this
     required: true
