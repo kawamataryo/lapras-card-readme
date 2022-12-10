@@ -19,7 +19,13 @@ test('wait 500 ms', async () => {
 
 // shows how the runner will run a javascript action with env / stdout protocol
 test('test runs', () => {
-  process.env['INPUT_MILLISECONDS'] = '500'
+  process.env['INPUT_SHARE_ID'] = '123456789'
+  process.env['INPUT_ICON_FIRST'] = '#000000'
+  process.env['INPUT_ICON_SECOND'] = '#ffffff'
+  process.env['INPUT_BACKGROUND_FIRST'] = '#cccccc'
+  process.env['INPUT_BACKGROUND_SECOND'] = '#eeeeee'
+  process.env['INPUT_LANG'] = 'en'
+
   const np = process.execPath
   const ip = path.join(__dirname, '..', 'lib', 'main.js')
   const options: cp.ExecFileSyncOptions = {

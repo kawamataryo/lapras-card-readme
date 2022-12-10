@@ -2,10 +2,29 @@ name: 'LAPRAS Card Actions'
 description: 'Add LAPRAS Card to your GitHub profile.'
 author: 'kawamataryo'
 inputs:
-  milliseconds: # change this
+  SHARE_ID:
     required: true
-    description: 'input description here'
-    default: 'default value if applicable'
+    description: 'lapras public share id'
+  ICON_FIRST:
+    required: false
+    description: 'icon color 1'
+    default: '#030E21'
+  ICON_SECOND:
+    required: false
+    description: 'icon color 2'
+    default: '#1688BF'
+  BACKGROUND_FIRST:
+    required: false
+    description: 'background color 1'
+    default: '#020E27'
+  BACKGROUND_SECOND:
+    required: false
+    description: 'background color 2'
+    default: '#0E5593'
+  LANG:
+    required: false
+    description: 'language'
+    default: 'ja'
 runs:
   using: 'node16'
   main: 'dist/index.js'
