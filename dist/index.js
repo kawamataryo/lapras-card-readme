@@ -133,7 +133,12 @@ function run() {
             readme.replace(re, cardText);
             yield fs.writeFile('README.md', readme);
             const octokit = github.getOctokit(core.getInput('GH_TOKEN'));
-            octokit.rest.repos.createOrUpdateFileContents({
+            const res = yield octokit.rest.repos.getContent({
+                repo: github.context.repo.repo,
+                owner: github.context.repo.owner,
+                path: 'README.md'
+            });
+            yield octokit.rest.repos.createOrUpdateFileContents({
                 repo: github.context.repo.repo,
                 owner: github.context.repo.owner,
                 path: 'README.md',
@@ -143,7 +148,7 @@ function run() {
                     name: 'github-actions[bot]',
                     email: '41898282+github-actions[bot]@users.noreply.github.com'
                 },
-                sha: github.context.sha
+                sha: res.data.sha
             });
             core.setOutput('lang', lang);
             core.setOutput('time', new Date().toTimeString());

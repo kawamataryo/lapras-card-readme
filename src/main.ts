@@ -31,7 +31,12 @@ async function run(): Promise<void> {
     await fs.writeFile('README.md', readme)
 
     const octokit = github.getOctokit(core.getInput('GH_TOKEN'))
-    octokit.rest.repos.createOrUpdateFileContents({
+    const res = await octokit.rest.repos.getContent({
+      repo: github.context.repo.repo,
+      owner: github.context.repo.owner,
+      path: 'README.md'
+    })
+    await octokit.rest.repos.createOrUpdateFileContents({
       repo: github.context.repo.repo,
       owner: github.context.repo.owner,
       path: 'README.md',
@@ -41,7 +46,7 @@ async function run(): Promise<void> {
         name: 'github-actions[bot]',
         email: '41898282+github-actions[bot]@users.noreply.github.com'
       },
-      sha: github.context.sha
+      sha: (res.data as any).sha
     })
 
     core.setOutput('lang', lang)
