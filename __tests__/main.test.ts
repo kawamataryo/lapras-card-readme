@@ -34,6 +34,6 @@ test('test runs', () => {
   try {
     console.log(cp.execFileSync(np, [ip], options).toString())
   } catch (error) {
-  console.log("🚀 ~ file: main.test.ts:37 ~ test ~ error", error)
+    console.log('🚀 ~ file: main.test.ts:37 ~ test ~ error', error)
   }
 })
