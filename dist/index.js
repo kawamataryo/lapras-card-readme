@@ -128,10 +128,9 @@ function run() {
             const lang = core.getInput('LANG');
             const score = yield (0, fetchScore_1.fetchScore)(shareId);
             const cardText = (0, createCardText_1.createCardText)({ shareId, score, theme, lang });
-            const readme = yield fs.readFile('README.md', 'utf8');
+            let readme = yield fs.readFile('README.md', 'utf8');
             const re = new RegExp(`${constant_1.MARK.START}(.|\n)*${constant_1.MARK.END}`, 'g');
-            readme.replace(re, cardText);
-            yield fs.writeFile('README.md', readme);
+            readme = readme.replace(re, cardText);
             const octokit = github.getOctokit(core.getInput('GH_TOKEN'));
             const res = yield octokit.rest.repos.getContent({
                 repo: github.context.repo.repo,

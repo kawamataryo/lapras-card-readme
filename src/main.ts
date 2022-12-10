@@ -23,12 +23,10 @@ async function run(): Promise<void> {
     const score = await fetchScore(shareId)
 
     const cardText = createCardText({shareId, score, theme, lang})
-    const readme = await fs.readFile('README.md', 'utf8')
+    let readme = await fs.readFile('README.md', 'utf8')
 
     const re = new RegExp(`${MARK.START}(.|\n)*${MARK.END}`, 'g')
-    readme.replace(re, cardText)
-
-    await fs.writeFile('README.md', readme)
+    readme = readme.replace(re, cardText)
 
     const octokit = github.getOctokit(core.getInput('GH_TOKEN'))
     const res = await octokit.rest.repos.getContent({
