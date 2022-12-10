@@ -4,6 +4,7 @@ import {fetchScore} from './fetchScore'
 import {Language, Theme} from './types/types'
 import * as fs from 'fs/promises'
 import {MARK} from './constant'
+import github from '@actions/github'
 
 async function run(): Promise<void> {
   try {
@@ -28,6 +29,20 @@ async function run(): Promise<void> {
     readme.replace(re, cardText)
 
     await fs.writeFile('../README.md', readme)
+
+    const myToken = core.getInput('myToken')
+    const octokit = github.getOctokit(myToken)
+    octokit.rest.repos.createOrUpdateFileContents({
+      repo: github.context.repo.repo,
+      owner: github.context.repo.owner,
+      path: 'README.md',
+      message: 'update README.md',
+      content: Buffer.from(readme).toString('base64'),
+      committer: {
+        name: 'github-actions[bot]',
+        email: '41898282+github-actions[bot]@users.noreply.github.com'
+      }
+    })
 
     core.setOutput('lang', lang)
     core.setOutput('time', new Date().toTimeString())

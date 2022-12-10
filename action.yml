@@ -2,6 +2,9 @@ name: 'LAPRAS Card Actions'
 description: 'Add LAPRAS Card to your GitHub profile.'
 author: 'kawamataryo'
 inputs:
+  GH_TOKEN:
+    required: true
+    description: 'GitHub Token'
   SHARE_ID:
     required: true
     description: 'lapras public share id'

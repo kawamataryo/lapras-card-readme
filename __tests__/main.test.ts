@@ -31,5 +31,9 @@ test('test runs', () => {
   const options: cp.ExecFileSyncOptions = {
     env: process.env
   }
-  console.log(cp.execFileSync(np, [ip], options).toString())
+  try {
+    console.log(cp.execFileSync(np, [ip], options).toString())
+  } catch (error) {
+  console.log("🚀 ~ file: main.test.ts:37 ~ test ~ error", error)
+  }
 })
