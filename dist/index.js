@@ -132,13 +132,13 @@ function run() {
             const re = new RegExp(`${constant_1.MARK.START}(.|\n)*${constant_1.MARK.END}`, 'g');
             readme.replace(re, cardText);
             yield fs.writeFile('README.md', readme);
-            const octokit = github.getOctokit(core.getInput('GITHUB_TOKEN'));
+            const octokit = github.getOctokit(core.getInput('GH_TOKEN'));
             octokit.rest.repos.createOrUpdateFileContents({
                 repo: github.context.repo.repo,
                 owner: github.context.repo.owner,
                 path: 'README.md',
                 message: 'update README.md',
-                content: Buffer.from(readme).toString('base64'),
+                content: readme,
                 committer: {
                     name: 'github-actions[bot]',
                     email: '41898282+github-actions[bot]@users.noreply.github.com'
