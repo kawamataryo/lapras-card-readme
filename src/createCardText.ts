@@ -19,5 +19,5 @@ export const createCardText = ({
     theme.icon.first
   )}&i2=${encodeURIComponent(theme.icon.second)}&l=${lang}`
 
-  return `<a href="https://lapras.com/public/${shareId}" target="_blank" rel="noopener noreferrer"><img src="${imageUrl}" width="300" ></a>`
+  return `<a href="https://lapras.com/public/${shareId}" target="_blank" rel="noopener noreferrer"><img src="${imageUrl}" width="400" ></a>`
 }
