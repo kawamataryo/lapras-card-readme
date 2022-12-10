@@ -4,7 +4,7 @@ import {fetchScore} from './fetchScore'
 import {Language, Theme} from './types/types'
 import * as fs from 'fs/promises'
 import {MARK} from './constant'
-import github from '@actions/github'
+import * as github from '@actions/github'
 
 async function run(): Promise<void> {
   try {
