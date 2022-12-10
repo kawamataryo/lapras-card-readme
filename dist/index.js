@@ -104,16 +104,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const core = __importStar(__nccwpck_require__(2186));
 const createCardText_1 = __nccwpck_require__(8098);
 const fetchScore_1 = __nccwpck_require__(2392);
 const fs = __importStar(__nccwpck_require__(3292));
 const constant_1 = __nccwpck_require__(2363);
-const github_1 = __importDefault(__nccwpck_require__(5438));
+const github = __importStar(__nccwpck_require__(5438));
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
@@ -136,10 +133,10 @@ function run() {
             readme.replace(re, cardText);
             yield fs.writeFile('README.md', readme);
             const myToken = core.getInput('myToken');
-            const octokit = github_1.default.getOctokit(myToken);
+            const octokit = github.getOctokit(myToken);
             octokit.rest.repos.createOrUpdateFileContents({
-                repo: github_1.default.context.repo.repo,
-                owner: github_1.default.context.repo.owner,
+                repo: github.context.repo.repo,
+                owner: github.context.repo.owner,
                 path: 'README.md',
                 message: 'update README.md',
                 content: Buffer.from(readme).toString('base64'),
