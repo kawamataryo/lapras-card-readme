@@ -132,8 +132,7 @@ function run() {
             const re = new RegExp(`${constant_1.MARK.START}(.|\n)*${constant_1.MARK.END}`, 'g');
             readme.replace(re, cardText);
             yield fs.writeFile('README.md', readme);
-            const myToken = core.getInput('myToken');
-            const octokit = github.getOctokit(myToken);
+            const octokit = github.getOctokit(core.getInput('GITHUB_TOKEN'));
             octokit.rest.repos.createOrUpdateFileContents({
                 repo: github.context.repo.repo,
                 owner: github.context.repo.owner,
