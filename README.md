@@ -1,4 +1,4 @@
-# LAPRAS Card Actions
+# LAPRAS Card Readme
 
 Add LAPRAS Card to your GitHub Profile
 
@@ -10,7 +10,7 @@ Add LAPRAS Card to your GitHub Profile
 
 A GitHub repository and a README file is required. We'll be making use of readme in the [profile repository][profile_readme]\*.
 
-- Save the README file after copy-pasting the following special comments. Your LAPRAS score will show up in between. 
+Save the README file after copy-pasting the following special comments. Your LAPRAS score will show up in between. 
 
 ```
 <!--START_SECTION:lapras-card-->
