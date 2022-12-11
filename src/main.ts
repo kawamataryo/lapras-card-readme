@@ -23,17 +23,17 @@ async function run(): Promise<void> {
     const score = await fetchScore(shareId)
 
     const cardText = createCardText({shareId, score, theme, lang})
-    let readme = await fs.readFile('README.md', 'utf8')
+    const octokit = github.getOctokit(core.getInput('GH_TOKEN'))
+    const res = (await octokit.rest.repos.getContent({
+      repo: github.context.repo.repo,
+      owner: github.context.repo.owner,
+      path: 'README.md'
+    })) as any
+    let readme = Buffer.from(res.data.content, res.data.encoding).toString()
 
     const re = new RegExp(`(${MARK.START})[\\s\\S]*(${MARK.END})`)
     readme = readme.replace(re, `$1\n${cardText}\n$2`)
 
-    const octokit = github.getOctokit(core.getInput('GH_TOKEN'))
-    const res = await octokit.rest.repos.getContent({
-      repo: github.context.repo.repo,
-      owner: github.context.repo.owner,
-      path: 'README.md'
-    })
     await octokit.rest.repos.createOrUpdateFileContents({
       repo: github.context.repo.repo,
       owner: github.context.repo.owner,
