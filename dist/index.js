@@ -16,23 +16,65 @@ exports.MARK = {
 
 /***/ }),
 
-/***/ 8098:
-/***/ ((__unused_webpack_module, exports) => {
+/***/ 668:
+/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
 
 "use strict";
 
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.createCardText = void 0;
-const createCardText = ({ shareId, score, theme, lang }) => {
-    const imageUrl = `https://lapras-card-generator.vercel.app/api/svg?e=${score.eScore}&b=${score.bScore}&i=${score.iScore}&b1=${encodeURIComponent(theme.background.first)}&b2=${encodeURIComponent(theme.background.second)}&i1=${encodeURIComponent(theme.icon.first)}&i2=${encodeURIComponent(theme.icon.second)}&l=${lang}`;
-    return `<a href="https://lapras.com/public/${shareId}" target="_blank" rel="noopener noreferrer"><img src="${imageUrl}" width="400" ></a>`;
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
 };
-exports.createCardText = createCardText;
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.fetchPrevReadmeContent = void 0;
+const github = __importStar(__nccwpck_require__(5438));
+const fetchPrevReadmeContent = (ghToken) => __awaiter(void 0, void 0, void 0, function* () {
+    const octokit = github.getOctokit(ghToken);
+    const res = yield octokit.rest.repos.getContent({
+        repo: github.context.repo.repo,
+        owner: github.context.repo.owner,
+        path: 'README.md'
+    });
+    const prevReadme = Buffer.from(res.data.content, res.data.encoding).toString();
+    return {
+        text: prevReadme,
+        sha: res.data.sha
+    };
+});
+exports.fetchPrevReadmeContent = fetchPrevReadmeContent;
 
 
 /***/ }),
 
-/***/ 2392:
+/***/ 6637:
 /***/ (function(__unused_webpack_module, exports) {
 
 "use strict";
@@ -48,21 +90,108 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.fetchScore = void 0;
-const fetchScore = (scoreId) => __awaiter(void 0, void 0, void 0, function* () {
-    // const res = await fetch(`https://lapras.com/public/${scoreId}.json`)
-    // const response = (await res.json()) as PublicApiResponse
-    // return {
-    //   eScore: response.e_score,
-    //   bScore: response.b_score,
-    //   iScore: response.i_score
-    // }
-    return {
-        eScore: 4.26,
-        bScore: 3.48,
-        iScore: 4.05
-    };
+const fetchScore = (shareId) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const res = yield fetch(`https://lapras.com/public/${shareId}.json`);
+        const response = (yield res.json());
+        return {
+            eScore: response.e_score,
+            bScore: response.b_score,
+            iScore: response.i_score
+        };
+    }
+    catch (_a) {
+        // TODO: remove this fallback
+        return {
+            eScore: 4.26,
+            bScore: 3.48,
+            iScore: 4.05
+        };
+    }
 });
 exports.fetchScore = fetchScore;
+
+
+/***/ }),
+
+/***/ 5237:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.rewriteReadmeToIncludeCardText = void 0;
+const constant_1 = __nccwpck_require__(2363);
+const createCardText = ({ shareId, score, theme, lang }) => {
+    const imageUrl = `https://lapras-card-generator.vercel.app/api/svg?e=${score.eScore}&b=${score.bScore}&i=${score.iScore}&b1=${encodeURIComponent(theme.background.first)}&b2=${encodeURIComponent(theme.background.second)}&i1=${encodeURIComponent(theme.icon.first)}&i2=${encodeURIComponent(theme.icon.second)}&l=${lang}`;
+    return `<a href="https://lapras.com/public/${shareId}" target="_blank" rel="noopener noreferrer"><img src="${imageUrl}" width="400" ></a>`;
+};
+const rewriteReadmeToIncludeCardText = (readme, { shareId, score, theme, lang }) => {
+    const re = new RegExp(`(${constant_1.MARK.START})[\\s\\S]*(${constant_1.MARK.END})`);
+    const cardText = createCardText({ shareId, score, theme, lang });
+    return readme.replace(re, `$1\n${cardText}\n$2`);
+};
+exports.rewriteReadmeToIncludeCardText = rewriteReadmeToIncludeCardText;
+
+
+/***/ }),
+
+/***/ 6242:
+/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
+
+"use strict";
+
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.updateReadme = void 0;
+const github = __importStar(__nccwpck_require__(5438));
+const updateReadme = (params) => __awaiter(void 0, void 0, void 0, function* () {
+    const octokit = github.getOctokit(params.ghToken);
+    yield octokit.rest.repos.createOrUpdateFileContents({
+        repo: github.context.repo.repo,
+        owner: github.context.repo.owner,
+        path: 'README.md',
+        message: 'update README.md',
+        content: Buffer.from(params.readme).toString('base64'),
+        committer: {
+            name: 'github-actions[bot]',
+            email: '41898282+github-actions[bot]@users.noreply.github.com'
+        },
+        sha: params.sha
+    });
+});
+exports.updateReadme = updateReadme;
 
 
 /***/ }),
@@ -106,10 +235,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const core = __importStar(__nccwpck_require__(2186));
-const createCardText_1 = __nccwpck_require__(8098);
-const fetchScore_1 = __nccwpck_require__(2392);
-const constant_1 = __nccwpck_require__(2363);
-const github = __importStar(__nccwpck_require__(5438));
+const updateReadme_1 = __nccwpck_require__(6242);
+const rewriteReadmeToIncludeCardText_1 = __nccwpck_require__(5237);
+const fetchScore_1 = __nccwpck_require__(6637);
+const fetchPrevReadmeContents_1 = __nccwpck_require__(668);
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
@@ -125,36 +254,18 @@ function run() {
                 }
             };
             const lang = core.getInput('LANG');
+            const token = core.getInput('GH_TOKEN');
+            const readmeContent = yield (0, fetchPrevReadmeContents_1.fetchPrevReadmeContent)(token);
             const score = yield (0, fetchScore_1.fetchScore)(shareId);
-            const cardText = (0, createCardText_1.createCardText)({ shareId, score, theme, lang });
-            const octokit = github.getOctokit(core.getInput('GH_TOKEN'));
-            const res = (yield octokit.rest.repos.getContent({
-                repo: github.context.repo.repo,
-                owner: github.context.repo.owner,
-                path: 'README.md'
-            }));
-            let readme = Buffer.from(res.data.content, res.data.encoding).toString();
-            const re = new RegExp(`(${constant_1.MARK.START})[\\s\\S]*(${constant_1.MARK.END})`);
-            readme = readme.replace(re, `$1\n${cardText}\n$2`);
-            yield octokit.rest.repos.createOrUpdateFileContents({
-                repo: github.context.repo.repo,
-                owner: github.context.repo.owner,
-                path: 'README.md',
-                message: 'update README.md',
-                content: Buffer.from(readme).toString('base64'),
-                committer: {
-                    name: 'github-actions[bot]',
-                    email: '41898282+github-actions[bot]@users.noreply.github.com'
-                },
-                sha: res.data.sha
+            const readme = (0, rewriteReadmeToIncludeCardText_1.rewriteReadmeToIncludeCardText)(readmeContent.text, {
+                shareId,
+                score,
+                theme,
+                lang
             });
-            core.setOutput('lang', lang);
-            core.setOutput('time', new Date().toTimeString());
+            yield (0, updateReadme_1.updateReadme)({ ghToken: token, readme, sha: readmeContent.sha });
         }
         catch (error) {
-            console.log('🚀 ~ file: main.ts:50 ~ run ~ error', error);
-            if (error instanceof Error)
-                core.setFailed(error.message);
             if (error instanceof Error)
                 core.setFailed(error);
         }

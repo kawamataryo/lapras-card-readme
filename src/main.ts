@@ -1,14 +1,13 @@
 import * as core from '@actions/core'
-import {createCardText} from './createCardText'
-import {fetchScore} from './fetchScore'
+import {updateReadme} from './lib/updateReadme'
+import {rewriteReadmeToIncludeCardText} from './lib/rewriteReadmeToIncludeCardText'
+import {fetchScore} from './lib/fetchScore'
 import {Language, Theme} from './types/types'
-import * as fs from 'fs/promises'
-import {MARK} from './constant'
-import * as github from '@actions/github'
+import {fetchPrevReadmeContent} from './lib/fetchPrevReadmeContents'
 
 async function run(): Promise<void> {
   try {
-    const shareId: string = core.getInput('SHARE_ID')
+    const shareId = core.getInput('SHARE_ID')
     const theme: Theme = {
       icon: {
         first: core.getInput('ICON_FIRST'),
@@ -20,38 +19,20 @@ async function run(): Promise<void> {
       }
     }
     const lang = core.getInput('LANG') as Language
+    const token = core.getInput('GH_TOKEN')
+
+    const readmeContent = await fetchPrevReadmeContent(token)
     const score = await fetchScore(shareId)
 
-    const cardText = createCardText({shareId, score, theme, lang})
-    const octokit = github.getOctokit(core.getInput('GH_TOKEN'))
-    const res = (await octokit.rest.repos.getContent({
-      repo: github.context.repo.repo,
-      owner: github.context.repo.owner,
-      path: 'README.md'
-    })) as any
-    let readme = Buffer.from(res.data.content, res.data.encoding).toString()
-
-    const re = new RegExp(`(${MARK.START})[\\s\\S]*(${MARK.END})`)
-    readme = readme.replace(re, `$1\n${cardText}\n$2`)
-
-    await octokit.rest.repos.createOrUpdateFileContents({
-      repo: github.context.repo.repo,
-      owner: github.context.repo.owner,
-      path: 'README.md',
-      message: 'update README.md',
-      content: Buffer.from(readme).toString('base64'),
-      committer: {
-        name: 'github-actions[bot]',
-        email: '41898282+github-actions[bot]@users.noreply.github.com'
-      },
-      sha: (res.data as any).sha
+    const readme = rewriteReadmeToIncludeCardText(readmeContent.text, {
+      shareId,
+      score,
+      theme,
+      lang
     })
 
-    core.setOutput('lang', lang)
-    core.setOutput('time', new Date().toTimeString())
+    await updateReadme({ghToken: token, readme, sha: readmeContent.sha})
   } catch (error) {
-    console.log('🚀 ~ file: main.ts:50 ~ run ~ error', error)
-    if (error instanceof Error) core.setFailed(error.message)
     if (error instanceof Error) core.setFailed(error)
   }
 }
