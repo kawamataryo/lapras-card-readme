@@ -57,9 +57,9 @@ const fetchScore = (scoreId) => __awaiter(void 0, void 0, void 0, function* () {
     //   iScore: response.i_score
     // }
     return {
-        eScore: 4.2,
-        bScore: 3.2,
-        iScore: 4.3
+        eScore: 4.26,
+        bScore: 3.48,
+        iScore: 4.05
     };
 });
 exports.fetchScore = fetchScore;
@@ -108,7 +108,6 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 const core = __importStar(__nccwpck_require__(2186));
 const createCardText_1 = __nccwpck_require__(8098);
 const fetchScore_1 = __nccwpck_require__(2392);
-const fs = __importStar(__nccwpck_require__(3292));
 const constant_1 = __nccwpck_require__(2363);
 const github = __importStar(__nccwpck_require__(5438));
 function run() {
@@ -128,15 +127,15 @@ function run() {
             const lang = core.getInput('LANG');
             const score = yield (0, fetchScore_1.fetchScore)(shareId);
             const cardText = (0, createCardText_1.createCardText)({ shareId, score, theme, lang });
-            let readme = yield fs.readFile('README.md', 'utf8');
-            const re = new RegExp(`(${constant_1.MARK.START})[\\s\\S]*(${constant_1.MARK.END})`);
-            readme = readme.replace(re, `$1\n${cardText}\n$2`);
             const octokit = github.getOctokit(core.getInput('GH_TOKEN'));
-            const res = yield octokit.rest.repos.getContent({
+            const res = (yield octokit.rest.repos.getContent({
                 repo: github.context.repo.repo,
                 owner: github.context.repo.owner,
                 path: 'README.md'
-            });
+            }));
+            let readme = Buffer.from(res.data.content, res.data.encoding).toString();
+            const re = new RegExp(`(${constant_1.MARK.START})[\\s\\S]*(${constant_1.MARK.END})`);
+            readme = readme.replace(re, `$1\n${cardText}\n$2`);
             yield octokit.rest.repos.createOrUpdateFileContents({
                 repo: github.context.repo.repo,
                 owner: github.context.repo.owner,
@@ -9709,14 +9708,6 @@ module.exports = require("events");
 
 "use strict";
 module.exports = require("fs");
-
-/***/ }),
-
-/***/ 3292:
-/***/ ((module) => {
-
-"use strict";
-module.exports = require("fs/promises");
 
 /***/ }),
 

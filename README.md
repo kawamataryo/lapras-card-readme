@@ -3,7 +3,17 @@
 Add LAPRAS Card to your GitHub Profile
 
 <!--START_SECTION:lapras-card-->
-<a href="https://lapras.com/public/sss" target="_blank" rel="noopener noreferrer"><img src="https://lapras-card-generator.vercel.app/api/svg?e=4.2&b=3.2&i=4.3&b1=%23020E27&b2=%230E5593&i1=%23030E21&i2=%231688BF&l=ja" width="400" ></a>
+<a href="https://lapras.com/public/sss" target="_blank" rel="noopener noreferrer"><img src="https://lapras-card-generator.vercel.app/api/svg?e=4.26&b=3.48&i=4.05&b1=%23020E27&b2=%230E5593&i1=%23030E21&i2=%231688BF&l=ja" width="400" ></a>
+<!--END_SECTION:lapras-card-->
+
+## Pre work
+
+A GitHub repository and a README file is required. We'll be making use of readme in the [profile repository][profile_readme]\*.
+
+Save the README file after copy-pasting the following special comments. Your LAPRAS score will show up in between. 
+
+```md
+<!--START_SECTION:lapras-card-->
 <!--END_SECTION:lapras-card-->
 ```
 
