@@ -1,8 +1,8 @@
 {
-  "name": "typescript-action",
-  "version": "0.0.0",
+  "name": "lapras-card-readme",
+  "version": "0.0.3",
   "private": true,
-  "description": "TypeScript template action",
+  "description": "Add LAPRAS Card to your GitHub profile",
   "main": "lib/main.js",
   "scripts": {
     "build": "tsc",
