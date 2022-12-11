@@ -10,8 +10,8 @@ export const fetchScore = async (scoreId: string): Promise<Score> => {
   //   iScore: response.i_score
   // }
   return {
-    eScore: 4.2,
-    bScore: 3.2,
-    iScore: 4.3
+    eScore: 4.26,
+    bScore: 3.48,
+    iScore: 4.05
   }
 }
