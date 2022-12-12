@@ -20,7 +20,7 @@ const createCardText = ({
     theme.icon.first
   )}&i2=${encodeURIComponent(theme.icon.second)}&l=${lang}`
 
-  return `<a href="https://lapras.com/public/${shareId}" target="_blank" rel="noopener noreferrer"><img src="${imageUrl}" width="400" ></a>`
+  return `<a href="https://lapras.com/public/${shareId}" target="_blank" rel="noopener noreferrer"><img src="${imageUrl}" width="400" ></a>\nLast Updated on ${new Date().toLocaleString()} UTC`
 }
 
 export const rewriteReadmeToIncludeCardText = (
