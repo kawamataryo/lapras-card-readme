@@ -4,7 +4,10 @@
 
 - [example](https://github.com/kawamataryo)
 
-<a href="https://lapras.com/public/sss" target="_blank" rel="noopener noreferrer"><img src="https://lapras-card-generator.vercel.app/api/svg?e=4.26&b=3.48&i=4.05&b1=%23020E27&b2=%230E5593&i1=%23030E21&i2=%231688BF&l=ja" width="400" ></a>
+|||
+|---|---|
+|<img src="https://lapras-card-generator.vercel.app/api/svg?e=4.26&b=3.48&i=4.05&b1=%23020E27&b2=%230E5593&i1=%23030E21&i2=%231688BF&l=ja" >|<img src="https://lapras-card-generator.vercel.app/api/svg?e=2.80&b=4.51&i=3.28&b1=%23232323&b2=%236d6d6d&i1=%23212121&i2=%23818181&l=en" >|
+|<img src="https://lapras-card-generator.vercel.app/api/svg?e=4.50&b=2.51&i=3.28&b1=%23f08d9a&b2=%23ffcfd5&i1=%23f97f90&i2=%23ffc7cd&l=ja" >|<img src="https://lapras-card-generator.vercel.app/api/svg?e=3.5&i=4.00&b1=%23004736&b2=%2300bf8f&i1=%23007b5c&i2=%2300bf8f&l=en" >|
 
 ## 🛠️ 使い方
 
@@ -22,9 +25,9 @@
 name: LAPRAS Card
 
 on:
-  workflow_dispatch: # for manual workflow trigger
+  workflow_dispatch:
   schedule:
-    - cron: "0 0 * * *" # runs at every 12AM UTC
+    - cron: "0 0 * * *"
 
 jobs:
   update-card:
@@ -34,7 +37,14 @@ jobs:
       - uses: kawamataryo/lapras-card-readme@main
         with:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SHARE_ID: 'your lapras public share id'
+          SHARE_ID: '公開ポートフォリオのID'
+          # 以下オプション
+          # https://lapras-card-generator.vercel.app でカスタマイズしたデザインを設定可能
+          # ICON_FIRST: '#030E21'
+          # ICON_SECOND: '#1688BF'
+          # BACKGROUND_FIRST: '#020E27'
+          # BACKGROUND_SECOND: '#0E5593'
+          # LANG: 'ja'
 ```
 
 初回は、GitHub Actionsの手動実行で画像を追加してください。以降は12:00(UTC)に更新されます。
