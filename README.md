@@ -47,7 +47,7 @@ jobs:
           # LANG: 'ja'
 ```
 
-初回は、GitHub Actionsの手動実行で画像を追加してください。以降は12:00(UTC)に更新されます。
+初回は、GitHub Actionsの手動実行で画像を追加してください。以降は毎日12:00(UTC)に更新されます。
 
 ![CleanShot 2022-12-12 at 19 51 47](https://user-images.githubusercontent.com/11070996/207027299-5f667477-a812-448b-9997-192f202181d9.png)
 
