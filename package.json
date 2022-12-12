@@ -1,6 +1,6 @@
 {
   "name": "lapras-card-readme",
-  "version": "1.0.0",
+  "version": "1.0.3",
   "private": true,
   "description": "Add LAPRAS Card to your GitHub profile",
   "main": "lib/main.js",

@@ -31,7 +31,7 @@ jobs:
     name: LAPRAS Card
     runs-on: ubuntu-latest
     steps:
-      - uses: kawamataryo/lapras-card-readme@latest
+      - uses: kawamataryo/lapras-card-readme@main
         with:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SHARE_ID: 'your lapras public share id'
