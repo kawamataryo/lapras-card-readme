@@ -61,7 +61,7 @@ jobs:
 |ICON_SECOND|`#1688BF`|LAPRASアイコンのグラデーションの end color|
 |BACKGROUND_FIRST|`#020E27`|カード背景のグラデーションの start color|
 |BACKGROUND_END|`#0E5593`|カード背景のグラデーションの end color|
-|LANG|`ja`|スコアの表記方法（`ja` or `en`|
+|LANG|`ja`|スコアの表記方法（`ja` or `en`）|
 
 [lapras-card-generator](https://lapras-card-generator.vercel.app) を使うことで生成画像のPreviewや、環境変数の出力も可能です。
 
