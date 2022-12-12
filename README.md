@@ -1,6 +1,8 @@
 # LAPRAS Card Readme
 
-[LAPRAS](https://lapras.com) の現在のスコアをSVG画像のカードとして、GitHub Profileに埋め込むGitHub Actionです。
+[LAPRAS](https://lapras.com) の現在のスコアをSVG画像のカードとして、GitHub Profileに埋め込むGitHub Actionsです。
+
+- [example](https://github.com/kawamataryo)
 
 <a href="https://lapras.com/public/sss" target="_blank" rel="noopener noreferrer"><img src="https://lapras-card-generator.vercel.app/api/svg?e=4.26&b=3.48&i=4.05&b1=%23020E27&b2=%230E5593&i1=%23030E21&i2=%231688BF&l=ja" width="400" ></a>
 
