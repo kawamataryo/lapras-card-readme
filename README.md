@@ -11,7 +11,7 @@
 
 ## 🛠️ 使い方
 
-事前に自分のGitHub Profile  `README.md` のカード挿入位置に以下のコメントを追加します。
+事前に自分のGitHub Profile  `README.md` のカードを挿入したい位置に以下のコメントを追加します。
 
 ```md
 <!--START_SECTION:lapras-card-->
