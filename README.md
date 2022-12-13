@@ -12,7 +12,7 @@ GitHub Profileに[LAPRAS](https://lapras.com) の現在のスコアをカード�
 ## 🛠️ 使い方
 
 ### LAPRASポートフォリオの公開
-このGitHub ActionsではLAPRASの公開ポートフォリオのAPIを叩き、最新のスコアを取得しています。
+このGitHub ActionsではLAPRASの公開ポートフォリオAPIを叩き、最新のスコアを取得しています。
 事前にポートフォリオの公開設定をお願いします
 
 * [ポートフォリオ公開設定方法](https://talent-help.lapras.com/ja/articles/3106144-%E3%83%9D%E3%83%BC%E3%83%88%E3%83%95%E3%82%A9%E3%83%AA%E3%82%AA%E3%82%92%E5%85%AC%E9%96%8B%E3%81%99%E3%82%8B)
