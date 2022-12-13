@@ -37,7 +37,7 @@ jobs:
       - uses: kawamataryo/lapras-card-readme@main
         with:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SHARE_ID: '公開ポートフォリオのID'
+          SHARE_ID: '<公開ポートフォリオのID>'
           # 以下オプション
           # https://lapras-card-generator.vercel.app でカスタマイズしたデザインを設定可能
           # ICON_FIRST: '#030E21'
@@ -47,7 +47,7 @@ jobs:
           # LANG: 'ja'
 ```
 
-初回は、GitHub Actionsの手動実行で画像を追加してください。以降は毎日12:00(UTC)に更新されます。
+**🚧 初回は、GitHub Actionsの手動実行**で画像を追加してください。以降は毎日12:00(UTC)に更新されます。
 
 ![CleanShot 2022-12-12 at 19 51 47](https://user-images.githubusercontent.com/11070996/207027299-5f667477-a812-448b-9997-192f202181d9.png)
 
