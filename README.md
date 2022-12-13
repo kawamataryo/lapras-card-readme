@@ -1,6 +1,6 @@
 # LAPRAS Card Readme
 
-[LAPRAS](https://lapras.com) の現在のスコアをSVG画像のカードとして、GitHub Profileに埋め込むGitHub Actionsです。
+[LAPRAS](https://lapras.com) の現在のスコアをGitHub Profileにカード画像として埋め込むGitHub Actionsです。
 
 - [example](https://github.com/kawamataryo)
 
@@ -11,14 +11,14 @@
 
 ## 🛠️ 使い方
 
-事前に自分のGitHub Profileの `README.md` 内のカード画像を挿入したい位置に以下のコメントを追加します。
+事前に自分のGitHub Profile  `README.md` のカード挿入位置に以下のコメントを追加します。
 
 ```md
 <!--START_SECTION:lapras-card-->
 <!--END_SECTION:lapras-card-->
 ```
 
-そして、`.github/workflows/` 内に、`lapras-card.yml`を追加します。
+そして、`.github/workflows/` 内に、`lapras-card.yml`を追加し、GitHub Actionsを設定します。
 `SHARE_ID`には、自分の公開プロフィールのIDを入力します（`https://lapras.com/public/<:share_id>`）。
 
 ```yml
