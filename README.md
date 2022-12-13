@@ -1,6 +1,6 @@
 # LAPRAS Card Readme
 
-[LAPRAS](https://lapras.com) の現在のスコアをGitHub Profileにカード画像として埋め込むGitHub Actionsです。
+GitHub Profileに[LAPRAS](https://lapras.com) の現在のスコアをカード画像として埋め込むGitHub Actionsです。
 
 - [example](https://github.com/kawamataryo)
 
