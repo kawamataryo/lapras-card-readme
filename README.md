@@ -11,14 +11,22 @@ GitHub Profileに[LAPRAS](https://lapras.com) の現在のスコアをカード�
 
 ## 🛠️ 使い方
 
-事前に自分のGitHub Profile  `README.md` のカードを挿入したい位置に以下のコメントを追加します。
+### LAPRASポートフォリオの公開
+このGitHub ActionsではLAPRASの公開ポートフォリオのAPIを叩き、最新のスコアを取得しています。
+事前にポートフォリオの公開設定をお願いします
+
+* [ポートフォリオ公開設定方法](https://talent-help.lapras.com/ja/articles/3106144-%E3%83%9D%E3%83%BC%E3%83%88%E3%83%95%E3%82%A9%E3%83%AA%E3%82%AA%E3%82%92%E5%85%AC%E9%96%8B%E3%81%99%E3%82%8B)
+
+### GitHub Profileの設定
+
+GitHub Profileリポジトリ `README.md` 内のカードを挿入したい位置に以下のコメントを追加します。
 
 ```md
 <!--START_SECTION:lapras-card-->
 <!--END_SECTION:lapras-card-->
 ```
 
-そして、`.github/workflows/` 内に、`lapras-card.yml`を追加し、GitHub Actionsを設定します。
+そして、`.github/workflows/` に、以下 `lapras-card.yml` を追加し、GitHub Actionsを設定します。
 `SHARE_ID`には、自分の公開プロフィールのIDを入力します（`https://lapras.com/public/<:share_id>`）。
 
 ```yml
@@ -47,7 +55,7 @@ jobs:
           # LANG: 'ja'
 ```
 
-**🚧初回はGitHub Actionsの手動実行🚧**で画像を追加してください。以降は毎日12:00(UTC)に更新されます。
+初回はGitHub Actionsの **⚠手動実行⚠️** で画像を追加してください。以降は毎日12:00(UTC)に更新されます。
 
 ![CleanShot 2022-12-12 at 19 51 47](https://user-images.githubusercontent.com/11070996/207027299-5f667477-a812-448b-9997-192f202181d9.png)
 
