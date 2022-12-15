@@ -44,7 +44,6 @@ jobs:
     steps:
       - uses: kawamataryo/lapras-card-readme@main
         with:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SHARE_ID: '<公開ポートフォリオのID>'
           # 以下オプション
           # https://lapras-card-generator.vercel.app でカスタマイズしたデザインを設定可能
