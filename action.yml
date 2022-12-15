@@ -3,7 +3,8 @@ description: 'Add LAPRAS Card to your GitHub profile.'
 author: 'kawamataryo'
 inputs:
   GH_TOKEN:
-    required: true
+    default: ${{ github.token }}
+    required: false
     description: 'GitHub Token'
   SHARE_ID:
     required: true
