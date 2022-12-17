@@ -21,7 +21,7 @@ async function run(): Promise<void> {
     const lang = core.getInput('LANG') as Language
     const cardWidth = core.getInput('CARD_WIDTH')
     const token = core.getInput('GH_TOKEN')
-    const hideUpdateTime = core.getInput('HIDE_UPDATE_TIME') === 'true'
+    const showUpdateTime = core.getInput('UPDATE_TIME') === 'true'
 
     const readmeContent = await fetchPrevReadmeContent(token)
     const score = await fetchScore(shareId)
@@ -32,7 +32,7 @@ async function run(): Promise<void> {
       theme,
       lang,
       cardWidth,
-      hideUpdateTime
+      showUpdateTime
     })
 
     await updateReadme({ghToken: token, readme, sha: readmeContent.sha})

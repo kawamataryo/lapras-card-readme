@@ -71,6 +71,7 @@ jobs:
 |BACKGROUND_END|`#0E5593`|カード背景のグラデーションの end color|
 |LANG|`ja`|スコアの表記方法（`ja` or `en`）|
 |CARD_WIDTH|`400`|出力する画像のwidth|
+|UPDATE_TIME|`true`|スコアの更新日時の表示有無|
 
 [lapras-card-generator](https://lapras-card-generator.vercel.app) を使うことで生成画像のPreviewや、環境変数の出力も可能です。
 
@@ -79,4 +80,3 @@ jobs:
 Exportボタンの `GitHub Actions params` で、環境変数をコピーできます。
 
 ![CleanShot 2022-12-17 at 21 41 44](https://user-images.githubusercontent.com/11070996/208242401-decb0cbb-c2dd-4ce4-832b-8ae83d6e74aa.png)
-

@@ -33,10 +33,10 @@ inputs:
     required: false
     description: 'card width'
     default: '400'
-  HIDE_UPDATE_TIME:
+  UPDATE_TIME:
     required: false
-    description: 'hide update time'
-    default: 'false'
+    description: 'display of score update date and time'
+    default: 'true'
 runs:
   using: 'node16'
   main: 'dist/index.js'
