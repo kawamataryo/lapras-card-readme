@@ -26,7 +26,7 @@ const createCardText = ({
 
   const updateTime = showUpdateTime ? `  \nLast Updated on ${new Date().toLocaleString()}` : ''
 
-  return `<a href="https://lapras.com/public/${shareId}" target="_blank" rel="noopener noreferrer"><img src="${imageUrl}" width="${cardWidth}" ></a>${updateTime}}`
+  return `<a href="https://lapras.com/public/${shareId}" target="_blank" rel="noopener noreferrer"><img src="${imageUrl}" width="${cardWidth}" ></a>${updateTime}`
 }
 
 export const rewriteReadmeToIncludeCardText = (

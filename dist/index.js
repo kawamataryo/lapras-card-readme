@@ -119,7 +119,7 @@ const constant_1 = __nccwpck_require__(2363);
 const createCardText = ({ shareId, score, theme, lang, cardWidth, showUpdateTime, }) => {
     const imageUrl = `https://lapras-card-generator.vercel.app/api/svg?e=${score.eScore}&b=${score.bScore}&i=${score.iScore}&b1=${encodeURIComponent(theme.background.first)}&b2=${encodeURIComponent(theme.background.second)}&i1=${encodeURIComponent(theme.icon.first)}&i2=${encodeURIComponent(theme.icon.second)}&l=${lang}`;
     const updateTime = showUpdateTime ? `  \nLast Updated on ${new Date().toLocaleString()}` : '';
-    return `<a href="https://lapras.com/public/${shareId}" target="_blank" rel="noopener noreferrer"><img src="${imageUrl}" width="${cardWidth}" ></a>${updateTime}}`;
+    return `<a href="https://lapras.com/public/${shareId}" target="_blank" rel="noopener noreferrer"><img src="${imageUrl}" width="${cardWidth}" ></a>${updateTime}`;
 };
 const rewriteReadmeToIncludeCardText = (readme, { shareId, score, theme, lang, cardWidth, showUpdateTime, }) => {
     const re = new RegExp(`(${constant_1.MARK.START})[\\s\\S]*(${constant_1.MARK.END})`);

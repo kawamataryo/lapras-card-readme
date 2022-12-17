@@ -53,6 +53,7 @@ jobs:
           # BACKGROUND_SECOND: '#0E5593'
           # LANG: 'ja'
           # CARD_WIDTH: '400'
+          # UPDATE_TIME: 'true'
 ```
 
 初回はGitHub Actionsの **⚠手動実行⚠️** で画像を追加してください。以降は毎日12:00(UTC)に更新されます。
