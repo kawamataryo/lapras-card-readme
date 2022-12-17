@@ -116,13 +116,13 @@ exports.fetchScore = fetchScore;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.rewriteReadmeToIncludeCardText = void 0;
 const constant_1 = __nccwpck_require__(2363);
-const createCardText = ({ shareId, score, theme, lang }) => {
+const createCardText = ({ shareId, score, theme, lang, cardWidth, }) => {
     const imageUrl = `https://lapras-card-generator.vercel.app/api/svg?e=${score.eScore}&b=${score.bScore}&i=${score.iScore}&b1=${encodeURIComponent(theme.background.first)}&b2=${encodeURIComponent(theme.background.second)}&i1=${encodeURIComponent(theme.icon.first)}&i2=${encodeURIComponent(theme.icon.second)}&l=${lang}`;
-    return `<a href="https://lapras.com/public/${shareId}" target="_blank" rel="noopener noreferrer"><img src="${imageUrl}" width="400" ></a>  \nLast Updated on ${new Date().toLocaleString()} UTC`;
+    return `<a href="https://lapras.com/public/${shareId}" target="_blank" rel="noopener noreferrer"><img src="${imageUrl}" width="${cardWidth}" ></a>  \nLast Updated on ${new Date().toLocaleString()} UTC`;
 };
-const rewriteReadmeToIncludeCardText = (readme, { shareId, score, theme, lang }) => {
+const rewriteReadmeToIncludeCardText = (readme, { shareId, score, theme, lang, cardWidth, }) => {
     const re = new RegExp(`(${constant_1.MARK.START})[\\s\\S]*(${constant_1.MARK.END})`);
-    const cardText = createCardText({ shareId, score, theme, lang });
+    const cardText = createCardText({ shareId, score, theme, lang, cardWidth });
     return readme.replace(re, `$1\n${cardText}\n$2`);
 };
 exports.rewriteReadmeToIncludeCardText = rewriteReadmeToIncludeCardText;
@@ -248,6 +248,7 @@ function run() {
                 }
             };
             const lang = core.getInput('LANG');
+            const cardWidth = core.getInput('CARD_WIDTH');
             const token = core.getInput('GH_TOKEN');
             const readmeContent = yield (0, fetchPrevReadmeContents_1.fetchPrevReadmeContent)(token);
             const score = yield (0, fetchScore_1.fetchScore)(shareId);
@@ -255,7 +256,8 @@ function run() {
                 shareId,
                 score,
                 theme,
-                lang
+                lang,
+                cardWidth
             });
             yield (0, updateReadme_1.updateReadme)({ ghToken: token, readme, sha: readmeContent.sha });
         }
