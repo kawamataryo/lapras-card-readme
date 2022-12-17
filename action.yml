@@ -33,6 +33,10 @@ inputs:
     required: false
     description: 'card width'
     default: '400'
+  HIDE_UPDATE_TIME:
+    required: false
+    description: 'hide update time'
+    default: 'false'
 runs:
   using: 'node16'
   main: 'dist/index.js'

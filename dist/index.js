@@ -116,13 +116,14 @@ exports.fetchScore = fetchScore;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.rewriteReadmeToIncludeCardText = void 0;
 const constant_1 = __nccwpck_require__(2363);
-const createCardText = ({ shareId, score, theme, lang, cardWidth, }) => {
+const createCardText = ({ shareId, score, theme, lang, cardWidth, hideUpdateTime, }) => {
     const imageUrl = `https://lapras-card-generator.vercel.app/api/svg?e=${score.eScore}&b=${score.bScore}&i=${score.iScore}&b1=${encodeURIComponent(theme.background.first)}&b2=${encodeURIComponent(theme.background.second)}&i1=${encodeURIComponent(theme.icon.first)}&i2=${encodeURIComponent(theme.icon.second)}&l=${lang}`;
-    return `<a href="https://lapras.com/public/${shareId}" target="_blank" rel="noopener noreferrer"><img src="${imageUrl}" width="${cardWidth}" ></a>  \nLast Updated on ${new Date().toLocaleString()} UTC`;
+    const updateTime = hideUpdateTime ? '' : `  \nLast Updated on ${new Date().toLocaleString()}`;
+    return `<a href="https://lapras.com/public/${shareId}" target="_blank" rel="noopener noreferrer"><img src="${imageUrl}" width="${cardWidth}" ></a>${updateTime}}`;
 };
-const rewriteReadmeToIncludeCardText = (readme, { shareId, score, theme, lang, cardWidth, }) => {
+const rewriteReadmeToIncludeCardText = (readme, { shareId, score, theme, lang, cardWidth, hideUpdateTime, }) => {
     const re = new RegExp(`(${constant_1.MARK.START})[\\s\\S]*(${constant_1.MARK.END})`);
-    const cardText = createCardText({ shareId, score, theme, lang, cardWidth });
+    const cardText = createCardText({ shareId, score, theme, lang, cardWidth, hideUpdateTime });
     return readme.replace(re, `$1\n${cardText}\n$2`);
 };
 exports.rewriteReadmeToIncludeCardText = rewriteReadmeToIncludeCardText;
@@ -250,6 +251,7 @@ function run() {
             const lang = core.getInput('LANG');
             const cardWidth = core.getInput('CARD_WIDTH');
             const token = core.getInput('GH_TOKEN');
+            const hideUpdateTime = core.getInput('HIDE_UPDATE_TIME') === 'true';
             const readmeContent = yield (0, fetchPrevReadmeContents_1.fetchPrevReadmeContent)(token);
             const score = yield (0, fetchScore_1.fetchScore)(shareId);
             const readme = (0, rewriteReadmeToIncludeCardText_1.rewriteReadmeToIncludeCardText)(readmeContent.text, {
@@ -257,7 +259,8 @@ function run() {
                 score,
                 theme,
                 lang,
-                cardWidth
+                cardWidth,
+                hideUpdateTime
             });
             yield (0, updateReadme_1.updateReadme)({ ghToken: token, readme, sha: readmeContent.sha });
         }
