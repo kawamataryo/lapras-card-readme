@@ -75,3 +75,8 @@ jobs:
 [lapras-card-generator](https://lapras-card-generator.vercel.app) を使うことで生成画像のPreviewや、環境変数の出力も可能です。
 
 <a href="https://lapras-card-generator.vercel.app"><img src="https://user-images.githubusercontent.com/11070996/207026772-5e0d8417-b3b1-47ec-9532-8529f22fd068.png"></a>
+
+Exportボタンの `GitHub Actions params` で、環境変数をコピーできます。
+
+![CleanShot 2022-12-17 at 21 41 44](https://user-images.githubusercontent.com/11070996/208242401-decb0cbb-c2dd-4ce4-832b-8ae83d6e74aa.png)
+
