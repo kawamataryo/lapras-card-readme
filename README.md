@@ -44,16 +44,16 @@ jobs:
     steps:
       - uses: kawamataryo/lapras-card-readme@main
         with:
-          SHARE_ID: '<公開ポートフォリオのID>'
+          SHARE_ID: "<公開ポートフォリオのID>"
           # 以下オプション
           # https://lapras-card-generator.vercel.app でカスタマイズしたデザインを設定可能
-          # ICON_FIRST: '#030E21'
-          # ICON_SECOND: '#1688BF'
-          # BACKGROUND_FIRST: '#020E27'
-          # BACKGROUND_SECOND: '#0E5593'
-          # LANG: 'ja'
-          # CARD_WIDTH: '400'
-          # UPDATE_TIME: 'true'
+          # ICON_FIRST: "#030E21"
+          # ICON_SECOND: "#1688BF"
+          # BACKGROUND_FIRST: "#020E27"
+          # BACKGROUND_SECOND: "#0E5593"
+          # LANG: "ja"
+          # CARD_WIDTH: "400"
+          # UPDATE_TIME: "true"
 ```
 
 初回はGitHub Actionsの **⚠手動実行⚠️** で画像を追加してください。以降は毎日12:00(UTC)に更新されます。
