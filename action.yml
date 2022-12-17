@@ -29,6 +29,10 @@ inputs:
     required: false
     description: 'language'
     default: 'ja'
+  CARD_WIDTH:
+    required: false
+    description: 'card width'
+    default: '400'
 runs:
   using: 'node16'
   main: 'dist/index.js'

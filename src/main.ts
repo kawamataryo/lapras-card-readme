@@ -19,6 +19,7 @@ async function run(): Promise<void> {
       }
     }
     const lang = core.getInput('LANG') as Language
+    const cardWidth = core.getInput('CARD_WIDTH')
     const token = core.getInput('GH_TOKEN')
 
     const readmeContent = await fetchPrevReadmeContent(token)
@@ -28,7 +29,8 @@ async function run(): Promise<void> {
       shareId,
       score,
       theme,
-      lang
+      lang,
+      cardWidth
     })
 
     await updateReadme({ghToken: token, readme, sha: readmeContent.sha})

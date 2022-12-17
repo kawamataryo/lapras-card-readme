@@ -52,6 +52,7 @@ jobs:
           # BACKGROUND_FIRST: '#020E27'
           # BACKGROUND_SECOND: '#0E5593'
           # LANG: 'ja'
+          # CARD_WIDTH: '400'
 ```
 
 初回はGitHub Actionsの **⚠手動実行⚠️** で画像を追加してください。以降は毎日12:00(UTC)に更新されます。
@@ -69,6 +70,7 @@ jobs:
 |BACKGROUND_FIRST|`#020E27`|カード背景のグラデーションの start color|
 |BACKGROUND_END|`#0E5593`|カード背景のグラデーションの end color|
 |LANG|`ja`|スコアの表記方法（`ja` or `en`）|
+|CARD_WIDTH|`400`|出力する画像のwidth|
 
 [lapras-card-generator](https://lapras-card-generator.vercel.app) を使うことで生成画像のPreviewや、環境変数の出力も可能です。
 

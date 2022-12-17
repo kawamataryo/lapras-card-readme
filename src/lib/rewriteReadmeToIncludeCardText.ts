@@ -5,12 +5,14 @@ const createCardText = ({
   shareId,
   score,
   theme,
-  lang
+  lang,
+  cardWidth,
 }: {
   shareId: string
   score: Score
   theme: Theme
   lang: Language
+  cardWidth: string
 }): string => {
   const imageUrl = `https://lapras-card-generator.vercel.app/api/svg?e=${
     score.eScore
@@ -20,7 +22,7 @@ const createCardText = ({
     theme.icon.first
   )}&i2=${encodeURIComponent(theme.icon.second)}&l=${lang}`
 
-  return `<a href="https://lapras.com/public/${shareId}" target="_blank" rel="noopener noreferrer"><img src="${imageUrl}" width="400" ></a>  \nLast Updated on ${new Date().toLocaleString()} UTC`
+  return `<a href="https://lapras.com/public/${shareId}" target="_blank" rel="noopener noreferrer"><img src="${imageUrl}" width="${cardWidth}" ></a>  \nLast Updated on ${new Date().toLocaleString()} UTC`
 }
 
 export const rewriteReadmeToIncludeCardText = (
@@ -29,15 +31,17 @@ export const rewriteReadmeToIncludeCardText = (
     shareId,
     score,
     theme,
-    lang
+    lang,
+    cardWidth,
   }: {
     shareId: string
     score: Score
     theme: Theme
     lang: Language
+    cardWidth: string
   }
 ): string => {
   const re = new RegExp(`(${MARK.START})[\\s\\S]*(${MARK.END})`)
-  const cardText = createCardText({shareId, score, theme, lang})
+  const cardText = createCardText({shareId, score, theme, lang, cardWidth})
   return readme.replace(re, `$1\n${cardText}\n$2`)
 }
