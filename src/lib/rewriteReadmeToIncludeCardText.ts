@@ -47,7 +47,11 @@ export const rewriteReadmeToIncludeCardText = (
     showUpdateTime: boolean
   }
 ): string => {
-  const re = new RegExp(`(${MARK.START})[\\s\\S]*(${MARK.END})`)
+  const markerPattern = new RegExp(`(${MARK.START})[\\s\\S]*(${MARK.END})`)
+  if (!markerPattern.test(readme)) {
+    throw new Error(`Error: README.mdにカードを挿入するためのMARKER文字列が見つかりませんでした。"${MARK.START + MARK.END}" をREADME.mdに追加してください`)
+  }
+
   const cardText = createCardText({shareId, score, theme, lang, cardWidth, showUpdateTime})
-  return readme.replace(re, `$1\n${cardText}\n$2`)
+  return readme.replace(markerPattern, `$1\n${cardText}\n$2`)
 }

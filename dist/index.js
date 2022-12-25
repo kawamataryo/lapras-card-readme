@@ -193,9 +193,12 @@ const createCardText = ({ shareId, score, theme, lang, cardWidth, showUpdateTime
     return `<a href="https://lapras.com/public/${shareId}" target="_blank" rel="noopener noreferrer"><img src="${imageUrl}" width="${cardWidth}" ></a>${updateTime}`;
 };
 const rewriteReadmeToIncludeCardText = (readme, { shareId, score, theme, lang, cardWidth, showUpdateTime, }) => {
-    const re = new RegExp(`(${constant_1.MARK.START})[\\s\\S]*(${constant_1.MARK.END})`);
+    const markerPattern = new RegExp(`(${constant_1.MARK.START})[\\s\\S]*(${constant_1.MARK.END})`);
+    if (!markerPattern.test(readme)) {
+        throw new Error(`Error: README.mdにカードを挿入するためのMARKER文字列が見つかりませんでした。"${constant_1.MARK.START + constant_1.MARK.END}" をREADME.mdに追加してください`);
+    }
     const cardText = createCardText({ shareId, score, theme, lang, cardWidth, showUpdateTime });
-    return readme.replace(re, `$1\n${cardText}\n$2`);
+    return readme.replace(markerPattern, `$1\n${cardText}\n$2`);
 };
 exports.rewriteReadmeToIncludeCardText = rewriteReadmeToIncludeCardText;
 
