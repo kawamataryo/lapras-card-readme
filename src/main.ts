@@ -2,27 +2,13 @@ import * as core from '@actions/core'
 import {updateReadme} from './lib/updateReadme'
 import {rewriteReadmeToIncludeCardText} from './lib/rewriteReadmeToIncludeCardText'
 import {fetchScore} from './lib/fetchScore'
-import {Language, Theme} from './types/types'
 import {fetchPrevReadmeContent} from './lib/fetchPrevReadmeContents'
+import {getActionsParams} from './lib/getActionsParams'
 
 async function run(): Promise<void> {
   try {
-    const shareId = core.getInput('SHARE_ID')
-    const theme: Theme = {
-      icon: {
-        first: core.getInput('ICON_FIRST'),
-        second: core.getInput('ICON_SECOND')
-      },
-      background: {
-        first: core.getInput('BACKGROUND_FIRST'),
-        second: core.getInput('BACKGROUND_SECOND')
-      }
-    }
-    const lang = core.getInput('LANG') as Language
-    const cardWidth = core.getInput('CARD_WIDTH')
-    const token = core.getInput('GH_TOKEN')
-    const showUpdateTime = core.getInput('UPDATE_TIME') === 'true'
-
+    const {shareId, theme, lang, cardWidth, token, showUpdateTime} =
+      getActionsParams()
     const readmeContent = await fetchPrevReadmeContent(token)
     const score = await fetchScore(shareId)
 
