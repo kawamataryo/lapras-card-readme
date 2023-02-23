@@ -9,6 +9,10 @@ inputs:
   SHARE_ID:
     required: true
     description: 'lapras public share id'
+  README_FILE:
+    required: false
+    description: 'your repository readmefile name'
+    default: 'README.md'
   ICON_FIRST:
     required: false
     description: 'icon color 1'

@@ -18,6 +18,7 @@ const stringParser = z.string()
 
 export const getActionsParams = (): {
   shareId: string
+  readmeFile: string
   theme: Theme
   lang: Language
   cardWidth: string
@@ -42,7 +43,8 @@ export const getActionsParams = (): {
   const lang = languageParser.parse(core.getInput('LANG'))
   const cardWidth = stringParser.parse(core.getInput('CARD_WIDTH'))
   const token = stringParser.parse(core.getInput('GH_TOKEN'))
+  const readmeFile = stringParser.parse(core.getInput('README_FILE'))
   const showUpdateTime = stringParser.parse(core.getInput('UPDATE_TIME')) === 'true'
 
-  return { shareId: shareIdParseResult.data, theme, lang, cardWidth, token, showUpdateTime}
+  return { shareId: shareIdParseResult.data, readmeFile, theme, lang, cardWidth, token, showUpdateTime}
 }

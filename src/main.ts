@@ -7,9 +7,9 @@ import {getActionsParams} from './lib/getActionsParams'
 
 async function run(): Promise<void> {
   try {
-    const {shareId, theme, lang, cardWidth, token, showUpdateTime} =
+    const {shareId, readmeFile, theme, lang, cardWidth, token, showUpdateTime} =
       getActionsParams()
-    const readmeContent = await fetchPrevReadmeContent(token)
+    const readmeContent = await fetchPrevReadmeContent(token, readmeFile)
     const score = await fetchScore(shareId)
 
     const readme = rewriteReadmeToIncludeCardText(readmeContent.text, {

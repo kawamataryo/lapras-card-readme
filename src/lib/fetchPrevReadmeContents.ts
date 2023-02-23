@@ -1,11 +1,11 @@
 import * as github from '@actions/github'
 
-export const fetchPrevReadmeContent = async (ghToken: string): Promise<{ text: string; sha: string }> => {
+export const fetchPrevReadmeContent = async (ghToken: string, readmeFile: string): Promise<{ text: string; sha: string }> => {
     const octokit = github.getOctokit(ghToken)
     const res: any = await octokit.rest.repos.getContent({
       repo: github.context.repo.repo,
       owner: github.context.repo.owner,
-      path: 'README.md'
+      path: readmeFile
     })
 
     const prevReadme = Buffer.from(
