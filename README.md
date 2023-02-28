@@ -54,6 +54,7 @@ jobs:
           # LANG: "ja"
           # CARD_WIDTH: "400"
           # UPDATE_TIME: "true"
+          # README_FILE: "README.md"
 ```
 
 初回はGitHub Actionsの **⚠手動実行⚠️** で画像を追加してください。以降は毎日12:00(UTC)に更新されます。
