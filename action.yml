@@ -11,7 +11,7 @@ inputs:
     description: 'lapras public share id'
   README_FILE:
     required: false
-    description: 'your repository readmefile name'
+    description: 'your repository readme file name'
     default: 'README.md'
   ICON_FIRST:
     required: false
@@ -41,6 +41,14 @@ inputs:
     required: false
     description: 'display of score update date and time'
     default: 'true'
+  IS_CENTER:
+    required: false
+    description: 'Determines if the image is centered in the readme'
+    default: 'false'
+  ALTERNATIVE_TEXT:
+    required: false
+    description: 'Alternative text for LAPRAS Card, crucial for enhancing accessibility for screen reader users'
+    default: ''
 runs:
   using: 'node16'
   main: 'dist/index.js'

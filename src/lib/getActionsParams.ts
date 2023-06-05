@@ -24,8 +24,11 @@ export const getActionsParams = (): {
   cardWidth: string
   token: string
   showUpdateTime: boolean
+  isCenter: boolean
+  alternativeText: string
 } => {
   const shareIdParseResult = shareIdParser.safeParse(core.getInput('SHARE_ID'))
+  const lang = languageParser.parse(core.getInput('LANG'))
   if (!shareIdParseResult.success) {
     throw new Error("SHARE_IDは公開ページのURL全体ではなく、公開URL末尾のIDを設定してください")
   }
@@ -40,11 +43,12 @@ export const getActionsParams = (): {
       second: core.getInput('BACKGROUND_SECOND')
     }
   })
-  const lang = languageParser.parse(core.getInput('LANG'))
   const cardWidth = stringParser.parse(core.getInput('CARD_WIDTH'))
   const token = stringParser.parse(core.getInput('GH_TOKEN'))
   const readmeFile = stringParser.parse(core.getInput('README_FILE'))
   const showUpdateTime = stringParser.parse(core.getInput('UPDATE_TIME')) === 'true'
+  const isCenter = stringParser.parse(core.getInput('IS_CENTER')) === 'true'
+  const alternativeText = stringParser.parse(core.getInput('ALTERNATIVE_TEXT'))
 
-  return { shareId: shareIdParseResult.data, readmeFile, theme, lang, cardWidth, token, showUpdateTime}
+  return { shareId: shareIdParseResult.data, readmeFile, theme, lang, cardWidth, token, showUpdateTime, isCenter, alternativeText }
 }

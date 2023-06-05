@@ -12,10 +12,11 @@ GitHub Profileに[LAPRAS](https://lapras.com) の現在のスコアをカード�
 ## 🛠️ 使い方
 
 ### LAPRASポートフォリオの公開
+
 このGitHub ActionsではLAPRASの公開ポートフォリオAPIを叩き、最新のスコアを取得しています。
 事前にポートフォリオの公開設定をします。
 
-* [ポートフォリオ公開設定方法](https://talent-help.lapras.com/ja/articles/3106144-%E3%83%9D%E3%83%BC%E3%83%88%E3%83%95%E3%82%A9%E3%83%AA%E3%82%AA%E3%82%92%E5%85%AC%E9%96%8B%E3%81%99%E3%82%8B)
+- [ポートフォリオ公開設定方法](https://talent-help.lapras.com/ja/articles/3106144-%E3%83%9D%E3%83%BC%E3%83%88%E3%83%95%E3%82%A9%E3%83%AA%E3%82%AA%E3%82%92%E5%85%AC%E9%96%8B%E3%81%99%E3%82%8B)
 
 ### GitHub Profileの設定
 
@@ -55,6 +56,8 @@ jobs:
           # CARD_WIDTH: "400"
           # UPDATE_TIME: "true"
           # README_FILE: "README.md"
+          # IS_CENTER: "true"
+          # ALTERNATIVE_TEXT: "Score of {SHARE_ID} on LAPRAS"
 ```
 
 初回はGitHub Actionsの **⚠手動実行⚠️** で画像を追加してください。以降は毎日12:00(UTC)に更新されます。
@@ -74,6 +77,8 @@ jobs:
 |LANG|`ja`|スコアの表記方法（`ja` or `en`）|
 |CARD_WIDTH|`400`|出力する画像のwidth|
 |UPDATE_TIME|`true`|スコアの更新日時の表示有無|
+|IS_CENTER|`true`|スコアの更新日時の表示有無|
+|ALTERNATIVE_TEXT|`${shareId}のLAPRASでのスコアは次の通りです: エンジニアリング: ${score.eScore} / 5.0, ビジネス: ${score.bScore} / 5.0, インフルエンス: ${score.iScore} / 5.0。`|画像の代替テキスト、スクリーンリーダーの利便性向上に必須。|
 
 [lapras-card-generator](https://lapras-card-generator.vercel.app) を使うことで生成画像のPreviewや、環境変数の出力も可能です。
 
