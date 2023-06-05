@@ -2,21 +2,21 @@ import { MARK } from '../constant'
 import { Language, Score, Theme } from '../types/types'
 
 const getAlternativeText = ({ alternativeText, lang, shareId, score }: { alternativeText: string, lang: Language, shareId: string, score: Score }): string => {
-  let text: string;
-  if (alternativeText == '') {
+  let text: string
+  if (alternativeText === '') {
     switch (lang) {
       case 'ja':
-        text = `${shareId}のLAPRASでのスコアは次の通りです: エンジニアリング: ${score.eScore} / 5.0, ビジネス: ${score.bScore} / 5.0, インフルエンス: ${score.iScore} / 5.0.`;
-        break;
+        text = `${shareId}のLAPRASでのスコアは次の通りです: エンジニアリング: ${score.eScore} / 5.0, ビジネス: ${score.bScore} / 5.0, インフルエンス: ${score.iScore} / 5.0.`
+        break
       case 'en':
       default:
-        text = `${shareId}'s scores on LAPRAS are as follows: Engineering: ${score.eScore} out of 5.0, Business: ${score.bScore} out of 5.0, Influence: ${score.iScore} out of 5.0.`;
-        break;
+        text = `${shareId}'s scores on LAPRAS are as follows: Engineering: ${score.eScore} out of 5.0, Business: ${score.bScore} out of 5.0, Influence: ${score.iScore} out of 5.0.`
+        break
     }
   } else {
     text = alternativeText
   }
-  return text;
+  return text
 }
 
 const createCardText = ({
@@ -82,7 +82,7 @@ export const rewriteReadmeToIncludeCardText = (
         throw new Error(`Error: README.mdにカードを挿入するためのMARKER文字列が見つかりませんでした。"${MARK.START + MARK.END}" をREADME.mdに追加してください`)
       case 'en':
       default:
-        throw new Error(`Error: The MARKER string to insert the card into README.md could not be found. Please add "${MARK.START + MARK.END}" to README.md`);
+        throw new Error(`Error: The MARKER string to insert the card into README.md could not be found. Please add "${MARK.START + MARK.END}" to README.md`)
     }
   }
 
