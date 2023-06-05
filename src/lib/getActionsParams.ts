@@ -30,7 +30,13 @@ export const getActionsParams = (): {
   const shareIdParseResult = shareIdParser.safeParse(core.getInput('SHARE_ID'))
   const lang = languageParser.parse(core.getInput('LANG'))
   if (!shareIdParseResult.success) {
-    throw new Error("SHARE_IDは公開ページのURL全体ではなく、公開URL末尾のIDを設定してください")
+    switch (lang) {
+      case 'ja':
+        throw new Error("SHARE_IDは公開ページのURL全体ではなく、公開URL末尾のIDを設定してください")
+      case 'en':
+      default:
+        throw new Error('Please set SHARE_ID to the ID at the end of the public URL, not the entire public page URL.')
+    }
   }
 
   const theme = themeParser.parse({

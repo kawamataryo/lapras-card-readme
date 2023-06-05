@@ -77,7 +77,13 @@ export const rewriteReadmeToIncludeCardText = (
 ): string => {
   const markerPattern = new RegExp(`(${MARK.START})[\\s\\S]*(${MARK.END})`)
   if (!markerPattern.test(readme)) {
-    throw new Error(`Error: README.mdにカードを挿入するためのMARKER文字列が見つかりませんでした。"${MARK.START + MARK.END}" をREADME.mdに追加してください`)
+    switch (lang) {
+      case 'ja':
+        throw new Error(`Error: README.mdにカードを挿入するためのMARKER文字列が見つかりませんでした。"${MARK.START + MARK.END}" をREADME.mdに追加してください`)
+      case 'en':
+      default:
+        throw new Error(`Error: The MARKER string to insert the card into README.md could not be found. Please add "${MARK.START + MARK.END}" to README.md`);
+    }
   }
 
   const cardText = createCardText({ shareId, score, theme, lang, cardWidth, showUpdateTime, isCenter, alternativeText })
