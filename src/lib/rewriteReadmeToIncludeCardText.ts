@@ -1,5 +1,5 @@
-import {MARK} from '../constant'
-import {Language, Score, Theme} from '../types/types'
+import { MARK } from '../constant'
+import { Language, Score, Theme } from '../types/types'
 
 const createCardText = ({
   shareId,

@@ -1,4 +1,4 @@
-import {PublicApiResponse, Score} from '../types/types'
+import { PublicApiResponse, Score } from '../types/types'
 import fetch from 'node-fetch'
 
 

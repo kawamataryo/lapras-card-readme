@@ -1,6 +1,6 @@
 import * as core from '@actions/core'
-import {Language, Theme} from '../types/types'
-import {z} from 'zod'
+import { Language, Theme } from '../types/types'
+import { z } from 'zod'
 
 const themeParser: z.ZodType<Theme> = z.object({
   icon: z.object({
