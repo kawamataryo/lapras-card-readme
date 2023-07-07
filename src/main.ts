@@ -7,8 +7,17 @@ import {getActionsParams} from './lib/getActionsParams'
 
 async function run(): Promise<void> {
   try {
-    const {shareId, readmeFile, theme, lang, cardWidth, token, showUpdateTime} =
-      getActionsParams()
+    const {
+      shareId,
+      readmeFile,
+      theme,
+      lang,
+      cardWidth,
+      token,
+      showUpdateTime,
+      isCenter,
+      alternativeText
+    } = getActionsParams()
     const readmeContent = await fetchPrevReadmeContent(token, readmeFile)
     const score = await fetchScore(shareId)
 
@@ -18,7 +27,9 @@ async function run(): Promise<void> {
       theme,
       lang,
       cardWidth,
-      showUpdateTime
+      showUpdateTime,
+      isCenter,
+      alternativeText
     })
 
     await updateReadme({ghToken: token, readme, sha: readmeContent.sha})

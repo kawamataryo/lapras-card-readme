@@ -1,5 +1,23 @@
-import {MARK} from '../constant'
-import {Language, Score, Theme} from '../types/types'
+import { MARK } from '../constant'
+import { Language, Score, Theme } from '../types/types'
+
+const getAlternativeText = ({ alternativeText, lang, shareId, score }: { alternativeText: string, lang: Language, shareId: string, score: Score }): string => {
+  let text: string
+  if (alternativeText === '') {
+    switch (lang) {
+      case 'ja':
+        text = `${shareId}のLAPRASでのスコアは次の通りです: エンジニアリング: ${score.eScore} / 5.0, ビジネス: ${score.bScore} / 5.0, インフルエンス: ${score.iScore} / 5.0.`
+        break
+      case 'en':
+      default:
+        text = `${shareId}'s scores on LAPRAS are as follows: Engineering: ${score.eScore} out of 5.0, Business: ${score.bScore} out of 5.0, Influence: ${score.iScore} out of 5.0.`
+        break
+    }
+  } else {
+    text = alternativeText
+  }
+  return text
+}
 
 const createCardText = ({
   shareId,
@@ -8,6 +26,8 @@ const createCardText = ({
   lang,
   cardWidth,
   showUpdateTime,
+  isCenter,
+  alternativeText,
 }: {
   shareId: string
   score: Score
@@ -15,6 +35,8 @@ const createCardText = ({
   lang: Language
   cardWidth: string
   showUpdateTime: boolean
+  isCenter: boolean,
+  alternativeText: string,
 }): string => {
   const imageUrl = `https://lapras-card-generator.vercel.app/api/svg?e=${
     score.eScore
@@ -26,7 +48,9 @@ const createCardText = ({
 
   const updateTime = showUpdateTime ? `  \nLast Updated on ${new Date().toLocaleString()}` : ''
 
-  return `<a href="https://lapras.com/public/${shareId}" target="_blank" rel="noopener noreferrer"><img src="${imageUrl}" width="${cardWidth}" ></a>${updateTime}`
+  const _alternativeText: string = getAlternativeText({ alternativeText, lang, shareId, score })
+
+  return `<p ${isCenter ? 'align="center"' : ''}><a href="https://lapras.com/public/${shareId}" target="_blank" rel="noopener noreferrer"><img alt="${_alternativeText}" src="${imageUrl}" width="${cardWidth}" ></a>${updateTime}</p>`
 }
 
 export const rewriteReadmeToIncludeCardText = (
@@ -38,6 +62,8 @@ export const rewriteReadmeToIncludeCardText = (
     lang,
     cardWidth,
     showUpdateTime,
+    isCenter,
+    alternativeText,
   }: {
     shareId: string
     score: Score
@@ -45,13 +71,21 @@ export const rewriteReadmeToIncludeCardText = (
     lang: Language
     cardWidth: string
     showUpdateTime: boolean
+    isCenter: boolean,
+    alternativeText: string,
   }
 ): string => {
   const markerPattern = new RegExp(`(${MARK.START})[\\s\\S]*(${MARK.END})`)
   if (!markerPattern.test(readme)) {
-    throw new Error(`Error: README.mdにカードを挿入するためのMARKER文字列が見つかりませんでした。"${MARK.START + MARK.END}" をREADME.mdに追加してください`)
+    switch (lang) {
+      case 'ja':
+        throw new Error(`Error: README.mdにカードを挿入するためのMARKER文字列が見つかりませんでした。"${MARK.START + MARK.END}" をREADME.mdに追加してください`)
+      case 'en':
+      default:
+        throw new Error(`Error: The MARKER string to insert the card into README.md could not be found. Please add "${MARK.START + MARK.END}" to README.md`)
+    }
   }
 
-  const cardText = createCardText({shareId, score, theme, lang, cardWidth, showUpdateTime})
+  const cardText = createCardText({ shareId, score, theme, lang, cardWidth, showUpdateTime, isCenter, alternativeText })
   return readme.replace(markerPattern, `$1\n${cardText}\n$2`)
 }
