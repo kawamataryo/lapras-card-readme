@@ -77,7 +77,7 @@ jobs:
 |LANG|`ja`|スコアの表記方法（`ja` or `en`）|
 |CARD_WIDTH|`400`|出力する画像のwidth|
 |UPDATE_TIME|`true`|スコアの更新日時の表示有無|
-|IS_CENTER|`true`|スコアの更新日時の表示有無|
+|IS_CENTER|`true`|カード画像を中央揃えするかどうか|
 |ALTERNATIVE_TEXT|`${shareId}のLAPRASでのスコアは次の通りです: エンジニアリング: ${score.eScore} / 5.0, ビジネス: ${score.bScore} / 5.0, インフルエンス: ${score.iScore} / 5.0。`|画像の代替テキスト、スクリーンリーダーの利便性向上に必須。|
 
 [lapras-card-generator](https://lapras-card-generator.vercel.app) を使うことで生成画像のPreviewや、環境変数の出力も可能です。
