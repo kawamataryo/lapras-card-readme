@@ -50,7 +50,7 @@ const createCardText = ({
 
   const _alternativeText: string = getAlternativeText({ alternativeText, lang, shareId, score })
 
-  return `<a href="https://lapras.com/public/${shareId}" target="_blank" rel="noopener noreferrer"><img ${isCenter ? 'align="center"' : ''} alt="${_alternativeText}" src="${imageUrl}" width="${cardWidth}" ></a>${updateTime}`
+  return `<p ${isCenter ? 'align="center"' : ''}><a href="https://lapras.com/public/${shareId}" target="_blank" rel="noopener noreferrer"><img alt="${_alternativeText}" src="${imageUrl}" width="${cardWidth}" ></a>${updateTime}</p>`
 }
 
 export const rewriteReadmeToIncludeCardText = (
