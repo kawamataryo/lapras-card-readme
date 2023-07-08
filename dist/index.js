@@ -218,7 +218,7 @@ const createCardText = ({ shareId, score, theme, lang, cardWidth, showUpdateTime
     const imageUrl = `https://lapras-card-generator.vercel.app/api/svg?e=${score.eScore}&b=${score.bScore}&i=${score.iScore}&b1=${encodeURIComponent(theme.background.first)}&b2=${encodeURIComponent(theme.background.second)}&i1=${encodeURIComponent(theme.icon.first)}&i2=${encodeURIComponent(theme.icon.second)}&l=${lang}`;
     const updateTime = showUpdateTime ? `  \nLast Updated on ${new Date().toLocaleString()}` : '';
     const _alternativeText = getAlternativeText({ alternativeText, lang, shareId, score });
-    return `<a href="https://lapras.com/public/${shareId}" target="_blank" rel="noopener noreferrer"><img ${isCenter ? 'align="center"' : ''} alt="${_alternativeText}" src="${imageUrl}" width="${cardWidth}" ></a>${updateTime}`;
+    return `<p ${isCenter ? 'align="center"' : ''}><a href="https://lapras.com/public/${shareId}" target="_blank" rel="noopener noreferrer"><img alt="${_alternativeText}" src="${imageUrl}" width="${cardWidth}" ></a>${updateTime}</p>`;
 };
 const rewriteReadmeToIncludeCardText = (readme, { shareId, score, theme, lang, cardWidth, showUpdateTime, isCenter, alternativeText, }) => {
     const markerPattern = new RegExp(`(${constant_1.MARK.START})[\\s\\S]*(${constant_1.MARK.END})`);
