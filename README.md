@@ -60,7 +60,9 @@ jobs:
           # ALTERNATIVE_TEXT: "Score of {SHARE_ID} on LAPRAS"
 ```
 
-初回はGitHub Actionsの **⚠手動実行⚠️** で画像を追加してください。以降は毎日12:00(UTC)に更新されます。
+初回はGitHub Actionsの **⚠手動実行⚠️** で画像を追加してください。以降は毎日12:00(UTC)に更新されます。  
+※Github Actionsにより当該`README.md`内のコメント設定箇所の書き換えを行うため、当該ワークフローへの書き込み権限の設定が必要になります。  
+　手動実行前に`Settings > Actions > General > Workflow permissions`を`Read and write permissions`に設定してください。
 
 ![CleanShot 2022-12-12 at 19 51 47](https://user-images.githubusercontent.com/11070996/207027299-5f667477-a812-448b-9997-192f202181d9.png)
 
