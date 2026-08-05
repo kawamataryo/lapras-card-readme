@@ -50,7 +50,7 @@ inputs:
     description: 'Alternative text for LAPRAS Card, crucial for enhancing accessibility for screen reader users'
     default: ''
 runs:
-  using: 'node16'
+  using: 'node24'
   main: 'dist/index.js'
 
 branding:
