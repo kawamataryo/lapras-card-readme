@@ -1,5 +1,5 @@
 import * as core from '@actions/core'
-import { Language, Theme } from '../types/types'
+import { CardType, Language, Theme } from '../types/types'
 import { z } from 'zod'
 
 const themeParser: z.ZodType<Theme> = z.object({
@@ -14,6 +14,7 @@ const themeParser: z.ZodType<Theme> = z.object({
 })
 const languageParser: z.ZodType<Language> = z.union([z.literal('en'), z.literal('ja')])
 export const shareIdParser = z.string().regex(/^(?!https?:\/\/).*$/)
+export const cardTypeParser: z.ZodType<CardType> = z.union([z.literal('score'), z.literal('tech')])
 const stringParser = z.string()
 
 export const getActionsParams = (): {
@@ -21,6 +22,7 @@ export const getActionsParams = (): {
   readmeFile: string
   theme: Theme
   lang: Language
+  cardType: CardType
   cardWidth: string
   token: string
   showUpdateTime: boolean
@@ -36,6 +38,17 @@ export const getActionsParams = (): {
       case 'en':
       default:
         throw new Error('Please set SHARE_ID to the ID at the end of the public URL, not the entire public page URL.')
+    }
+  }
+
+  const cardTypeParseResult = cardTypeParser.safeParse(core.getInput('CARD_TYPE'))
+  if (!cardTypeParseResult.success) {
+    switch (lang) {
+      case 'ja':
+        throw new Error('CARD_TYPEは"score"または"tech"を設定してください')
+      case 'en':
+      default:
+        throw new Error('Please set CARD_TYPE to either "score" or "tech".')
     }
   }
 
@@ -56,5 +69,16 @@ export const getActionsParams = (): {
   const isCenter = stringParser.parse(core.getInput('IS_CENTER')) === 'true'
   const alternativeText = stringParser.parse(core.getInput('ALTERNATIVE_TEXT'))
 
-  return { shareId: shareIdParseResult.data, readmeFile, theme, lang, cardWidth, token, showUpdateTime, isCenter, alternativeText }
+  return {
+    shareId: shareIdParseResult.data,
+    readmeFile,
+    theme,
+    lang,
+    cardType: cardTypeParseResult.data,
+    cardWidth,
+    token,
+    showUpdateTime,
+    isCenter,
+    alternativeText
+  }
 }
