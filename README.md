@@ -53,6 +53,7 @@ jobs:
           # BACKGROUND_FIRST: "#020E27"
           # BACKGROUND_SECOND: "#0E5593"
           # LANG: "ja"
+          # CARD_TYPE: "score"
           # CARD_WIDTH: "400"
           # UPDATE_TIME: "true"
           # README_FILE: "README.md"
@@ -75,10 +76,28 @@ jobs:
 |BACKGROUND_FIRST|`#020E27`|カード背景のグラデーションの start color|
 |BACKGROUND_END|`#0E5593`|カード背景のグラデーションの end color|
 |LANG|`ja`|スコアの表記方法（`ja` or `en`）|
+|CARD_TYPE|`score`|カードの種類（`score` or `tech`）。詳細は下記「カードタイプ」を参照|
 |CARD_WIDTH|`400`|出力する画像のwidth|
 |UPDATE_TIME|`true`|スコアの更新日時の表示有無|
 |IS_CENTER|`true`|カード画像を中央揃えするかどうか|
 |ALTERNATIVE_TEXT|`${shareId}のLAPRASでのスコアは次の通りです: エンジニアリング: ${score.eScore} / 5.0, ビジネス: ${score.bScore} / 5.0, インフルエンス: ${score.iScore} / 5.0。`|カード画像の代替テキスト、スクリーンリーダーでの利便性向上に関係|
+
+## 🃏 カードタイプ
+
+`CARD_TYPE` で2種類のカードを切り替えられます。
+
+- `score`（デフォルト）: 従来のカード。エンジニアリング（E）/ ビジネス（B）/ インフルエンス（I）の3スコアを表示
+- `tech`: 技術力スコアの内訳カード。技術力スコアと、その内訳（GitHub / 技術記事 / 技術イベント / タグ個数）を表示
+
+LAPRAS の公開プロフィールページでは、現在は技術力スコアのみが表示されており、B / I スコアは表示されなくなっています。この2スコアは将来的に提供されなくなる可能性もありそうなため、公開プロフィールページの表示に合わせたい場合は `CARD_TYPE: "tech"` の利用を推奨します。既存の `score` カードは後方互換のため、デフォルトのまま維持しています。
+
+```yml
+        with:
+          SHARE_ID: "<公開ポートフォリオのID>"
+          CARD_TYPE: "tech"
+```
+
+なお、`tech` を指定していても、対象のプロフィールに技術力スコアの内訳データが無い場合は、警告を出したうえで自動的に `score` カードにフォールバックします（ワークフロー自体は失敗しません）。
 
 [lapras-card-generator](https://lapras-card-generator.vercel.app) を使うことで生成画像のPreviewや、環境変数の出力も可能です。
 

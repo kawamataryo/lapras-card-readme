@@ -12,6 +12,7 @@ async function run(): Promise<void> {
       readmeFile,
       theme,
       lang,
+      cardType,
       cardWidth,
       token,
       showUpdateTime,
@@ -21,11 +22,30 @@ async function run(): Promise<void> {
     const readmeContent = await fetchPrevReadmeContent(token, readmeFile)
     const score = await fetchScore(shareId)
 
+    let resolvedCardType = cardType
+    if (cardType === 'tech' && score.eScoreDetails === undefined) {
+      switch (lang) {
+        case 'ja':
+          core.warning(
+            'CARD_TYPEにtechが指定されましたが、技術力スコアの内訳データが取得できなかったため、従来のカードにフォールバックします'
+          )
+          break
+        case 'en':
+        default:
+          core.warning(
+            'CARD_TYPE is set to "tech", but the tech score breakdown data is unavailable. Falling back to the default card.'
+          )
+          break
+      }
+      resolvedCardType = 'score'
+    }
+
     const readme = rewriteReadmeToIncludeCardText(readmeContent.text, {
       shareId,
       score,
       theme,
       lang,
+      cardType: resolvedCardType,
       cardWidth,
       showUpdateTime,
       isCenter,

@@ -33,6 +33,10 @@ inputs:
     required: false
     description: 'language'
     default: 'ja'
+  CARD_TYPE:
+    required: false
+    description: 'card type ("score" or "tech")'
+    default: 'score'
   CARD_WIDTH:
     required: false
     description: 'card width'
@@ -50,7 +54,7 @@ inputs:
     description: 'Alternative text for LAPRAS Card, crucial for enhancing accessibility for screen reader users'
     default: ''
 runs:
-  using: 'node16'
+  using: 'node24'
   main: 'dist/index.js'
 
 branding:

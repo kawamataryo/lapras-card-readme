@@ -94,14 +94,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.fetchScore = void 0;
 const node_fetch_1 = __importDefault(__nccwpck_require__(4429));
+const mapResponseToScore_1 = __nccwpck_require__(9051);
 const fetchScore = (shareId) => __awaiter(void 0, void 0, void 0, function* () {
     const res = yield (0, node_fetch_1.default)(`https://lapras.com/public/${shareId}.json`);
     const response = (yield res.json());
-    return {
-        eScore: response.e_score,
-        bScore: response.b_score,
-        iScore: response.i_score
-    };
+    return (0, mapResponseToScore_1.mapResponseToScore)(response);
 });
 exports.fetchScore = fetchScore;
 
@@ -137,7 +134,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.getActionsParams = exports.shareIdParser = void 0;
+exports.getActionsParams = exports.cardTypeParser = exports.shareIdParser = void 0;
 const core = __importStar(__nccwpck_require__(2186));
 const zod_1 = __nccwpck_require__(3301);
 const themeParser = zod_1.z.object({
@@ -152,6 +149,7 @@ const themeParser = zod_1.z.object({
 });
 const languageParser = zod_1.z.union([zod_1.z.literal('en'), zod_1.z.literal('ja')]);
 exports.shareIdParser = zod_1.z.string().regex(/^(?!https?:\/\/).*$/);
+exports.cardTypeParser = zod_1.z.union([zod_1.z.literal('score'), zod_1.z.literal('tech')]);
 const stringParser = zod_1.z.string();
 const getActionsParams = () => {
     const shareIdParseResult = exports.shareIdParser.safeParse(core.getInput('SHARE_ID'));
@@ -163,6 +161,16 @@ const getActionsParams = () => {
             case 'en':
             default:
                 throw new Error('Please set SHARE_ID to the ID at the end of the public URL, not the entire public page URL.');
+        }
+    }
+    const cardTypeParseResult = exports.cardTypeParser.safeParse(core.getInput('CARD_TYPE'));
+    if (!cardTypeParseResult.success) {
+        switch (lang) {
+            case 'ja':
+                throw new Error('CARD_TYPEは"score"または"tech"を設定してください');
+            case 'en':
+            default:
+                throw new Error('Please set CARD_TYPE to either "score" or "tech".');
         }
     }
     const theme = themeParser.parse({
@@ -181,9 +189,52 @@ const getActionsParams = () => {
     const showUpdateTime = stringParser.parse(core.getInput('UPDATE_TIME')) === 'true';
     const isCenter = stringParser.parse(core.getInput('IS_CENTER')) === 'true';
     const alternativeText = stringParser.parse(core.getInput('ALTERNATIVE_TEXT'));
-    return { shareId: shareIdParseResult.data, readmeFile, theme, lang, cardWidth, token, showUpdateTime, isCenter, alternativeText };
+    return {
+        shareId: shareIdParseResult.data,
+        readmeFile,
+        theme,
+        lang,
+        cardType: cardTypeParseResult.data,
+        cardWidth,
+        token,
+        showUpdateTime,
+        isCenter,
+        alternativeText
+    };
 };
 exports.getActionsParams = getActionsParams;
+
+
+/***/ }),
+
+/***/ 9051:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.mapResponseToScore = void 0;
+const mapResponseToScore = (response) => {
+    return Object.assign({ eScore: response.e_score, bScore: response.b_score, iScore: response.i_score }, (response.e_score_details !== undefined
+        ? {
+            eScoreDetails: {
+                scoreVersion: response.e_score_details.score_version,
+                eScore: response.e_score_details.e_score,
+                eScorePercentile: response.e_score_details.e_score_percentile,
+                invertEScorePercentile: response.e_score_details.invert_e_score_percentile,
+                githubScore: response.e_score_details.github_score,
+                githubScorePercentile: response.e_score_details.github_score_percentile,
+                techArticleScore: response.e_score_details.tech_article_score,
+                techArticleScorePercentile: response.e_score_details.tech_article_score_percentile,
+                techEventScore: response.e_score_details.tech_event_score,
+                techEventScorePercentile: response.e_score_details.tech_event_score_percentile,
+                tagCountScore: response.e_score_details.tag_count_score,
+                tagCountScorePercentile: response.e_score_details.tag_count_score_percentile
+            }
+        }
+        : {}));
+};
+exports.mapResponseToScore = mapResponseToScore;
 
 
 /***/ }),
@@ -196,17 +247,31 @@ exports.getActionsParams = getActionsParams;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.rewriteReadmeToIncludeCardText = void 0;
 const constant_1 = __nccwpck_require__(2363);
-const getAlternativeText = ({ alternativeText, lang, shareId, score }) => {
+const getAlternativeText = ({ alternativeText, lang, shareId, score, cardType }) => {
     let text;
     if (alternativeText === '') {
-        switch (lang) {
-            case 'ja':
-                text = `${shareId}のLAPRASでのスコアは次の通りです: エンジニアリング: ${score.eScore} / 5.0, ビジネス: ${score.bScore} / 5.0, インフルエンス: ${score.iScore} / 5.0.`;
-                break;
-            case 'en':
-            default:
-                text = `${shareId}'s scores on LAPRAS are as follows: Engineering: ${score.eScore} out of 5.0, Business: ${score.bScore} out of 5.0, Influence: ${score.iScore} out of 5.0.`;
-                break;
+        if (cardType === 'tech' && score.eScoreDetails !== undefined) {
+            const d = score.eScoreDetails;
+            switch (lang) {
+                case 'ja':
+                    text = `${shareId}のLAPRASでの技術力スコアは${score.eScore} / 5.0（エンジニアの上位${d.invertEScorePercentile.toFixed(2)}%）。内訳: GitHub ${d.githubScore}、技術記事 ${d.techArticleScore}、技術イベント ${d.techEventScore}、タグ個数 ${d.tagCountScore}。`;
+                    break;
+                case 'en':
+                default:
+                    text = `${shareId}'s tech score on LAPRAS is ${score.eScore} out of 5.0 (top ${d.invertEScorePercentile.toFixed(2)}% of engineers). Breakdown: GitHub ${d.githubScore}, Tech articles ${d.techArticleScore}, Tech events ${d.techEventScore}, Tag count ${d.tagCountScore}.`;
+                    break;
+            }
+        }
+        else {
+            switch (lang) {
+                case 'ja':
+                    text = `${shareId}のLAPRASでのスコアは次の通りです: エンジニアリング: ${score.eScore} / 5.0, ビジネス: ${score.bScore} / 5.0, インフルエンス: ${score.iScore} / 5.0.`;
+                    break;
+                case 'en':
+                default:
+                    text = `${shareId}'s scores on LAPRAS are as follows: Engineering: ${score.eScore} out of 5.0, Business: ${score.bScore} out of 5.0, Influence: ${score.iScore} out of 5.0.`;
+                    break;
+            }
         }
     }
     else {
@@ -214,13 +279,21 @@ const getAlternativeText = ({ alternativeText, lang, shareId, score }) => {
     }
     return text;
 };
-const createCardText = ({ shareId, score, theme, lang, cardWidth, showUpdateTime, isCenter, alternativeText, }) => {
-    const imageUrl = `https://lapras-card-generator.vercel.app/api/svg?e=${score.eScore}&b=${score.bScore}&i=${score.iScore}&b1=${encodeURIComponent(theme.background.first)}&b2=${encodeURIComponent(theme.background.second)}&i1=${encodeURIComponent(theme.icon.first)}&i2=${encodeURIComponent(theme.icon.second)}&l=${lang}`;
+const buildImageUrl = ({ score, theme, lang, cardType }) => {
+    const themeQuery = `b1=${encodeURIComponent(theme.background.first)}&b2=${encodeURIComponent(theme.background.second)}&i1=${encodeURIComponent(theme.icon.first)}&i2=${encodeURIComponent(theme.icon.second)}&l=${lang}`;
+    if (cardType === 'tech' && score.eScoreDetails !== undefined) {
+        const d = score.eScoreDetails;
+        return `https://lapras-card-generator.vercel.app/api/svg?type=tech&e=${score.eScore}&ep=${d.invertEScorePercentile.toFixed(2)}&g=${d.githubScore}&ta=${d.techArticleScore}&te=${d.techEventScore}&tg=${d.tagCountScore}&${themeQuery}`;
+    }
+    return `https://lapras-card-generator.vercel.app/api/svg?e=${score.eScore}&b=${score.bScore}&i=${score.iScore}&${themeQuery}`;
+};
+const createCardText = ({ shareId, score, theme, lang, cardType, cardWidth, showUpdateTime, isCenter, alternativeText, }) => {
+    const imageUrl = buildImageUrl({ score, theme, lang, cardType });
     const updateTime = showUpdateTime ? `  \nLast Updated on ${new Date().toLocaleString()}` : '';
-    const _alternativeText = getAlternativeText({ alternativeText, lang, shareId, score });
+    const _alternativeText = getAlternativeText({ alternativeText, lang, shareId, score, cardType });
     return `<p ${isCenter ? 'align="center"' : ''}><a href="https://lapras.com/public/${shareId}" target="_blank" rel="noopener noreferrer"><img alt="${_alternativeText}" src="${imageUrl}" width="${cardWidth}" ></a>${updateTime}</p>`;
 };
-const rewriteReadmeToIncludeCardText = (readme, { shareId, score, theme, lang, cardWidth, showUpdateTime, isCenter, alternativeText, }) => {
+const rewriteReadmeToIncludeCardText = (readme, { shareId, score, theme, lang, cardType, cardWidth, showUpdateTime, isCenter, alternativeText, }) => {
     const markerPattern = new RegExp(`(${constant_1.MARK.START})[\\s\\S]*(${constant_1.MARK.END})`);
     if (!markerPattern.test(readme)) {
         switch (lang) {
@@ -231,7 +304,7 @@ const rewriteReadmeToIncludeCardText = (readme, { shareId, score, theme, lang, c
                 throw new Error(`Error: The MARKER string to insert the card into README.md could not be found. Please add "${constant_1.MARK.START + constant_1.MARK.END}" to README.md`);
         }
     }
-    const cardText = createCardText({ shareId, score, theme, lang, cardWidth, showUpdateTime, isCenter, alternativeText });
+    const cardText = createCardText({ shareId, score, theme, lang, cardType, cardWidth, showUpdateTime, isCenter, alternativeText });
     return readme.replace(markerPattern, `$1\n${cardText}\n$2`);
 };
 exports.rewriteReadmeToIncludeCardText = rewriteReadmeToIncludeCardText;
@@ -346,14 +419,28 @@ const getActionsParams_1 = __nccwpck_require__(2345);
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const { shareId, readmeFile, theme, lang, cardWidth, token, showUpdateTime, isCenter, alternativeText } = (0, getActionsParams_1.getActionsParams)();
+            const { shareId, readmeFile, theme, lang, cardType, cardWidth, token, showUpdateTime, isCenter, alternativeText } = (0, getActionsParams_1.getActionsParams)();
             const readmeContent = yield (0, fetchPrevReadmeContents_1.fetchPrevReadmeContent)(token, readmeFile);
             const score = yield (0, fetchScore_1.fetchScore)(shareId);
+            let resolvedCardType = cardType;
+            if (cardType === 'tech' && score.eScoreDetails === undefined) {
+                switch (lang) {
+                    case 'ja':
+                        core.warning('CARD_TYPEにtechが指定されましたが、技術力スコアの内訳データが取得できなかったため、従来のカードにフォールバックします');
+                        break;
+                    case 'en':
+                    default:
+                        core.warning('CARD_TYPE is set to "tech", but the tech score breakdown data is unavailable. Falling back to the default card.');
+                        break;
+                }
+                resolvedCardType = 'score';
+            }
             const readme = (0, rewriteReadmeToIncludeCardText_1.rewriteReadmeToIncludeCardText)(readmeContent.text, {
                 shareId,
                 score,
                 theme,
                 lang,
+                cardType: resolvedCardType,
                 cardWidth,
                 showUpdateTime,
                 isCenter,
