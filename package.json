@@ -10,8 +10,9 @@
     "format-check": "prettier --check '**/*.ts'",
     "lint": "eslint src/**/*.ts",
     "package": "ncc build lib/main.js --source-map --license licenses.txt",
-    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --watchman=false",
-    "all": "npm run build && npm run format-check && npm run lint && npm run package && npm test"
+    "test": "vitest run",
+    "all": "npm run build && npm run format-check && npm run lint && npm run package && npm test && npm run test:typecheck",
+    "test:typecheck": "tsc --project tsconfig.test.json"
   },
   "repository": {
     "type": "git",
@@ -36,11 +37,9 @@
     "@vercel/ncc": "^0.45.0",
     "eslint": "^9.39.5",
     "eslint-plugin-github": "^6.1.2",
-    "eslint-plugin-jest": "^29.17.0",
-    "jest": "^30.5.2",
     "prettier": "3.9.10",
-    "ts-jest": "^29.4.15",
-    "typescript": "~6.0.0"
+    "typescript": "~6.0.0",
+    "vitest": "^5.0.5"
   },
   "volta": {
     "node": "24.19.0"

@@ -1,5 +1,5 @@
 import {cardTypeParser, shareIdParser} from '../src/lib/getActionsParams'
-import {test, expect} from '@jest/globals'
+import {test, expect} from 'vitest'
 import {rewriteReadmeToIncludeCardText} from '../src/lib/rewriteReadmeToIncludeCardText'
 import {mapResponseToScore} from '../src/lib/mapResponseToScore'
 import {MARK} from '../src/constant'
