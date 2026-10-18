@@ -357,8 +357,8 @@ const updateReadme = (params) => __awaiter(void 0, void 0, void 0, function* () 
     yield octokit.rest.repos.createOrUpdateFileContents({
         repo: github.context.repo.repo,
         owner: github.context.repo.owner,
-        path: 'README.md',
-        message: 'update README.md',
+        path: params.readmeFile,
+        message: `update ${params.readmeFile}`,
         content: Buffer.from(params.readme).toString('base64'),
         committer: {
             name: 'github-actions[bot]',
@@ -446,7 +446,12 @@ function run() {
                 isCenter,
                 alternativeText
             });
-            yield (0, updateReadme_1.updateReadme)({ ghToken: token, readme, sha: readmeContent.sha });
+            yield (0, updateReadme_1.updateReadme)({
+                ghToken: token,
+                readme,
+                readmeFile,
+                sha: readmeContent.sha
+            });
         }
         catch (error) {
             if (error instanceof Error)
