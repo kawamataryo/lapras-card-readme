@@ -1,20 +1,19 @@
-import {jest, test, expect} from '@jest/globals'
+import {vi, test, expect} from 'vitest'
+import * as github from '@actions/github'
+import {updateReadme} from '../src/lib/updateReadme'
 
-jest.unstable_mockModule('@actions/github', () => ({
-  getOctokit: jest.fn(),
+vi.mock('@actions/github', () => ({
+  getOctokit: vi.fn(),
   context: {repo: {owner: 'owner', repo: 'profile'}}
 }))
-
-const github = await import('@actions/github')
-const {updateReadme} = await import('../src/lib/updateReadme')
 
 test.each(['README.md', 'Readme.md', 'docs/README.ja.md'])(
   'updates the configured README file: %s',
   async readmeFile => {
-    const createOrUpdateFileContents = jest
+    const createOrUpdateFileContents = vi
       .fn<(...args: unknown[]) => Promise<unknown>>()
       .mockResolvedValue({})
-    jest.mocked(github.getOctokit).mockReturnValue({
+    vi.mocked(github.getOctokit).mockReturnValue({
       rest: {repos: {createOrUpdateFileContents}}
     } as unknown as ReturnType<typeof github.getOctokit>)
     const readme = '# プロフィール\nUpdated card\n'

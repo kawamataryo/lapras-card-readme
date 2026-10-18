@@ -111,5 +111,7 @@ Exportボタンの `GitHub Actions params` で、環境変数をコピーでき�
 
 Use Node.js 24, then run `npm ci` and `npm run all` to check the build,
 formatting, lint, bundled Action and tests. Commit regenerated `dist/` files.
+Tests run with Vitest in a Node environment; `npm run test:typecheck` also checks
+TypeScript types in the test files. `npm run all` includes both checks.
 TypeScript uses the latest 6.0 patch and ESLint uses the latest 9.x patch to
-stay within the supported peer ranges of the current test and lint tools.
+stay within the supported peer ranges of the current lint tools.
