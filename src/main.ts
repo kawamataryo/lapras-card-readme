@@ -52,7 +52,12 @@ async function run(): Promise<void> {
       alternativeText
     })
 
-    await updateReadme({ghToken: token, readme, sha: readmeContent.sha})
+    await updateReadme({
+      ghToken: token,
+      readme,
+      readmeFile,
+      sha: readmeContent.sha
+    })
   } catch (error) {
     if (error instanceof Error) core.setFailed(error)
   }
