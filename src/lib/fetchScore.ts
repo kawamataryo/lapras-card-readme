@@ -1,5 +1,4 @@
 import { PublicApiResponse, Score } from '../types/types'
-import fetch from 'node-fetch'
 import { mapResponseToScore } from './mapResponseToScore'
 
 export const fetchScore = async (shareId: string): Promise<Score> => {

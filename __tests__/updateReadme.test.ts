@@ -1,17 +1,18 @@
 import {jest, test, expect} from '@jest/globals'
-import * as github from '@actions/github'
-import {updateReadme} from '../src/lib/updateReadme'
 
-jest.mock('@actions/github', () => ({
+jest.unstable_mockModule('@actions/github', () => ({
   getOctokit: jest.fn(),
   context: {repo: {owner: 'owner', repo: 'profile'}}
 }))
+
+const github = await import('@actions/github')
+const {updateReadme} = await import('../src/lib/updateReadme')
 
 test.each(['README.md', 'Readme.md', 'docs/README.ja.md'])(
   'updates the configured README file: %s',
   async readmeFile => {
     const createOrUpdateFileContents = jest
-      .fn<Promise<unknown>, unknown[]>()
+      .fn<(...args: unknown[]) => Promise<unknown>>()
       .mockResolvedValue({})
     jest.mocked(github.getOctokit).mockReturnValue({
       rest: {repos: {createOrUpdateFileContents}}

@@ -1,9 +1,9 @@
 module.exports = {
   clearMocks: true,
-  moduleFileExtensions: ['js', 'ts'],
+  extensionsToTreatAsEsm: ['.ts'],
   testMatch: ['**/*.test.ts'],
   transform: {
-    '^.+\\.ts$': 'ts-jest'
+    '^.+\\.ts$': ['ts-jest', {useESM: true, tsconfig: {types: ['node']}}]
   },
   verbose: true
 }
