@@ -1,4 +1,0 @@
-dist/
-**/*.js
-node_modules/
-jest.config.js

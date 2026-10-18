@@ -106,3 +106,10 @@ LAPRAS の公開プロフィールページでは、現在は技術力スコア�
 Exportボタンの `GitHub Actions params` で、環境変数をコピーできます。
 
 ![CleanShot 2022-12-17 at 21 41 44](https://user-images.githubusercontent.com/11070996/208242401-decb0cbb-c2dd-4ce4-832b-8ae83d6e74aa.png)
+
+## Development
+
+Use Node.js 24, then run `npm ci` and `npm run all` to check the build,
+formatting, lint, bundled Action and tests. Commit regenerated `dist/` files.
+TypeScript uses the latest 6.0 patch and ESLint uses the latest 9.x patch to
+stay within the supported peer ranges of the current test and lint tools.
